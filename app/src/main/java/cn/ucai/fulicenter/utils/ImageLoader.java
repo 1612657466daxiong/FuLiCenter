@@ -9,17 +9,19 @@ import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.squareup.okhttp.Call;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+
 
 /**
  * Created by yao on 2016/5/18.
@@ -208,7 +210,7 @@ public class ImageLoader {
         Call call = mOkHttpClient.newCall(request);
         call.enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(Request request, IOException e) {
                 Message msg = Message.obtain();
                 msg.what=DOWNLOAD_ERROR;
                 mBean.error = e.getMessage();
@@ -217,7 +219,7 @@ public class ImageLoader {
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(Response response) throws IOException {
                 Bitmap bitmap = BitmapUtils.getBitmap(response.body().bytes(), mBean.width, mBean.height);
                 if (bitmap != null) {
                     mBean.bitmap = bitmap;
