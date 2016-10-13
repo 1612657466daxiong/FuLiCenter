@@ -23,7 +23,9 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.3.0'
+    compile 'com.android.support:recyclerview-v7:23.3.0'
     compile files('libs/okio-1.6.0.jar')
     compile files('libs/okhttp-2.7.5.jar')
     compile files('libs/gson-2.2.4.jar')
+    compile files('libs/okhttp-3.2.0.jar')
 }
