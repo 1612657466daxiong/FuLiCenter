@@ -3,12 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".activitys.MainActivity">
+    tools:context=".activitys.MainActivity"
+    android:background="@color/list_background">
     <RadioGroup
+        android:id="@+id/rg_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -19,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/selector_menu_item_boutique"
-            android:text="精品"
+            android:text="@string/boutique_text"
             android:textColor="@color/main_botton_text_color"
             android:gravity="center"
             android:textSize="20sp"
@@ -30,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/selector_menu_item_new_good"
-            android:text="新品"
+            android:text="@string/new_good_text"
             android:textColor="@color/main_botton_text_color"
             android:gravity="center"
             android:textSize="20sp"
@@ -41,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/selector_menu_item_category"
-            android:text="类别"
+            android:text="@string/category_text"
             android:textColor="@color/main_botton_text_color"
             android:gravity="center"
             android:textSize="20sp"
@@ -57,7 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/selector_menu_item_cart"
-            android:text="购物车"
+            android:text="@string/cart_text"
             android:textColor="@color/main_botton_text_color"
             android:gravity="center"
             android:textSize="20sp"
@@ -67,11 +65,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/cart_hint"
+                android:layout_alignEnd="@id/rb_cart"
                 android:layout_alignTop="@id/rb_cart"
-                android:layout_alignRight="@id/rb_cart"
-                android:text="100"
-                android:textSize="15dp"
                 android:textColor="@color/black"
+                android:text="10"
                 />
         </RelativeLayout>
         <RadioButton
@@ -80,13 +77,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/selector_menu_item_personal_center"
-            android:text="我"
+            android:text="@string/personal_center_text"
             android:textColor="@color/main_botton_text_color"
             android:gravity="center"
             android:textSize="20sp"
             android:button="@null"/>
 
     </RadioGroup>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@id/rg_menu"
+        android:background="#2f2f29"
+        android:layout_marginBottom="5dp"/>
 
 
 </RelativeLayout>
