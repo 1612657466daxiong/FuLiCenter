@@ -29,7 +29,8 @@ public class SplashActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
-                    startActivity(new Intent(SplashActivity.this,MainActivity.class));
+                startActivity(new Intent(SplashActivity.this,MainActivity.class));
+                overridePendingTransition(R.anim.push_bottom_in,R.anim.push_bottom_out);
 
             }
         }).start();
