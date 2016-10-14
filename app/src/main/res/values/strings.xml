@@ -5,4 +5,9 @@
     <string name="now_refresh">now_refresh</string>
     <string name="no_more">no more</string>
     <string name="load_more">load more</string>
+    <string name="category_text">类别</string>
+    <string name="new_good_text">新品</string>
+    <string name="cart_text">购物车</string>
+    <string name="personal_center_text">我</string>
+    <string name="boutique_text">精品</string>
 </resources>
