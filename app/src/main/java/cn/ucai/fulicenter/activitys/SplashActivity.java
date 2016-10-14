@@ -24,13 +24,13 @@ public class SplashActivity extends AppCompatActivity {
                 long countTime = System.currentTimeMillis()-start;
                 if (SLEEP_TIME-countTime>0){
                     try {
-                        Thread.sleep(SLEEP_TIME);
+                        Thread.sleep(SLEEP_TIME-countTime);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                }else {
-                    startActivity(new Intent(SplashActivity.this,MainActivity.class));
                 }
+                    startActivity(new Intent(SplashActivity.this,MainActivity.class));
+
             }
         }).start();
     }
