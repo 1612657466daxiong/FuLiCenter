@@ -7,10 +7,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -21,6 +24,7 @@ import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.activitys.MainActivity;
 import cn.ucai.fulicenter.adapters.NewGoodsAdapter;
 import cn.ucai.fulicenter.bean.NewGoodsBean;
+import cn.ucai.fulicenter.bean.Result;
 import cn.ucai.fulicenter.net.GoodsDao;
 import cn.ucai.fulicenter.net.OkHttpUtils;
 
@@ -59,17 +63,18 @@ public class NewGoodsFragment extends Fragment {
     }
 
     private void initData() {
-        GoodsDao.downloadNewGoods(mcontext, pageid, new OkHttpUtils.OnCompleteListener() {
-            @Override
-            public void onSuccess(Object result) {
+       GoodsDao.downloadNewGoods(mcontext,pageid, new OkHttpUtils.OnCompleteListener<NewGoodsBean[]>() {
+           @Override
+           public void onSuccess(NewGoodsBean[] result) {
+               ArrayList<NewGoodsBean> newGoodslist = GoodsDao.util.array2List(result);
+               mAdapter.initData(newGoodslist);
+           }
 
-            }
+           @Override
+           public void onError(String error) {
 
-            @Override
-            public void onError(String error) {
-
-            }
-        });
+           }
+       });
     }
 
     private void initView() {

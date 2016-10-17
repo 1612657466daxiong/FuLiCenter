@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 <ImageView
     android:id="@+id/im_newgoods"
-    android:layout_width="195dp"
+    android:layout_width="200dp"
     android:layout_height="300dp" />
     <TextView
         android:id="@+id/tv_goodsname"

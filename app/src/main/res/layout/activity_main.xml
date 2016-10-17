@@ -6,10 +6,12 @@
     tools:context=".activitys.MainActivity"
     android:background="@color/list_background">
     <RelativeLayout
+
         android:id="@+id/rlayout"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="50dp"
+        >
     <RadioGroup
         android:id="@+id/rg_menu"
         android:layout_width="match_parent"
@@ -91,11 +93,18 @@
 
 
     <View
+        android:id="@+id/id_xian"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_above="@id/rlayout"
         android:background="#2f2f29"
         android:layout_marginBottom="5dp"/>
 
+<RelativeLayout
+    android:id="@+id/fragment_stay"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_above="@id/id_xian">
 
+</RelativeLayout>
 </RelativeLayout>

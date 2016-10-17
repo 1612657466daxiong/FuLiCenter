@@ -12,6 +12,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.fragments.NewGoodsFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.rlayout)
     RelativeLayout rlayout;
 
+    NewGoodsFragment fragment;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +49,11 @@ public class MainActivity extends AppCompatActivity {
             case R.id.rb_boutique:
                 break;
             case R.id.rb_new_good:
+                if (fragment!=null){
+                }else {
+                    fragment= new NewGoodsFragment();
+                    getSupportFragmentManager().beginTransaction().add(R.id.fragment_stay, fragment).show(fragment).commit();
+                }
                 break;
             case R.id.rb_category:
                 break;

@@ -72,14 +72,7 @@ public class NewGoodsAdapter extends RecyclerView.Adapter {
         NewGoodsBean newgood = mgoodlist.get(position);
         newGoodsViewHolder.tv_goodsname.setText(newgood.getGoodsName());
         newGoodsViewHolder.tvPrice.setText(newgood.getCurrencyPrice());
-        ImageLoader.build(I.SERVER_ROOT+I.REQUEST_DOWNLOAD_IMAGE)
-                .addParam(I.IMAGE_URL,newgood.getGoodsImg())
-                .imageView(newGoodsViewHolder.imNewgoods)
-                .width(195)
-                .height(300)
-                .defaultPicture(R.drawable.nopic)
-                .listener(parent)
-                .showImage(mcontext);
+        ImageLoader.downloadImg(mcontext,newGoodsViewHolder.imNewgoods,newgood.getGoodsThumb());
 
     }
 
@@ -90,7 +83,7 @@ public class NewGoodsAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemViewType(int position) {
-        if (position == getItemCount() - 1) {
+        if (position == getItemCount() -1) {
             return I.TYPE_FOOTER;
         } else {
             return I.TYPE_ITEM;
