@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<ImageView
+    android:id="@+id/im_newgoods"
+    android:layout_width="195dp"
+    android:layout_height="300dp" />
+    <TextView
+        android:id="@+id/tv_introduction"
+        android:layout_width="195dp"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="#00f"
+        android:hint="简介"/>
+    <TextView
+        android:id="@+id/tv_price"
+        android:layout_width="195dp"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:textColor="#f00"
+        android:hint="价格"/>
+</LinearLayout>
