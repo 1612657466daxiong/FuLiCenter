@@ -33,6 +33,33 @@ public class NewGoodsAdapter extends RecyclerView.Adapter {
 
     RecyclerView parent;
 
+    String FooterText;
+
+    public void setFooterText(String footerText) {
+        FooterText = footerText;
+    }
+
+    public boolean isMore() {
+        return isMore;
+    }
+
+    public void setMore(boolean more) {
+        isMore = more;
+    }
+
+    boolean isMore;
+
+    public void setYibu(boolean yibu) {
+        this.yibu = yibu;
+    }
+
+    boolean yibu = false;
+
+    public void addData(ArrayList<NewGoodsBean> list){
+        mgoodlist.addAll(list);
+        notifyDataSetChanged();
+    }
+
     public void initData(ArrayList<NewGoodsBean> list){
         if (mgoodlist!=null){
             mgoodlist.clear();
@@ -65,7 +92,7 @@ public class NewGoodsAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (getItemViewType(position)== I.TYPE_FOOTER){
             FooterViewHolder footerViewHolder = (FooterViewHolder) holder;
-            footerViewHolder.tvFooter.setText("没有更多数据加载");
+            footerViewHolder.tvFooter.setText(FooterText);
             return;
         }
         NewGoodsViewHolder newGoodsViewHolder = (NewGoodsViewHolder) holder;

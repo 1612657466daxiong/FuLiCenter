@@ -22,4 +22,6 @@ public class GoodsDao {
                 .execute(listener);
 
     }
+
+
 }

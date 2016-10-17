@@ -32,7 +32,9 @@ import cn.ucai.fulicenter.net.OkHttpUtils;
  * A simple {@link Fragment} subclass.
  */
 public class NewGoodsFragment extends Fragment {
-
+    static final int TYPE_PULLUP = 0;
+    static final int TYPE_PULLDOWN = 1;
+    static final int TYPE_DOWNLOAD = 2;
 
     @Bind(R.id.tv_srf_hint)
     TextView mtvSrfHint;
@@ -41,14 +43,19 @@ public class NewGoodsFragment extends Fragment {
     @Bind(R.id.srfl)
     SwipeRefreshLayout msrfl;
 
+    GridLayoutManager glm;
+
     MainActivity mcontext;
     NewGoodsAdapter mAdapter;
     ArrayList<NewGoodsBean> mlist;
     int pageid =1;
 
+    int mNewstatus;
+
     public NewGoodsFragment() {
         // Required empty public constructor
     }
+
 
 
     @Override
@@ -58,16 +65,84 @@ public class NewGoodsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_new_goods, container, false);
         ButterKnife.bind(this, view);
         initView();
-        initData();
+        initData(TYPE_DOWNLOAD,pageid);
+        setlisener();
         return view;
     }
 
-    private void initData() {
+    private void setlisener() {
+        setPullUpListner();
+        setPullDownLisener();
+    }
+
+    private void setPullDownLisener() {
+        msrfl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                pageid=1;
+                msrfl.setRefreshing(true);
+                msrfl.setEnabled(true);
+                mtvSrfHint.setVisibility(View.VISIBLE);
+                initData(TYPE_PULLDOWN,pageid);
+                mtvSrfHint.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    private void setPullUpListner() {
+        mrecv.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            int lastposition;
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                mNewstatus = newState;
+                lastposition = glm.findLastVisibleItemPosition();
+                if (lastposition>=mAdapter.getItemCount()-1 && newState == RecyclerView.SCROLL_STATE_IDLE
+                        && mAdapter.isMore()){
+                    pageid++;
+                    initData(TYPE_PULLUP,pageid);
+                }
+                if (newState!=RecyclerView.SCROLL_STATE_DRAGGING){
+                    mAdapter.setYibu(true);
+                    mAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                lastposition=glm.findLastVisibleItemPosition();
+
+            }
+        });
+    }
+
+    private void initData(final int type,int pageid) {
        GoodsDao.downloadNewGoods(mcontext,pageid, new OkHttpUtils.OnCompleteListener<NewGoodsBean[]>() {
            @Override
            public void onSuccess(NewGoodsBean[] result) {
+               mAdapter.setMore(result!=null && result.length>0);
+               if (!mAdapter.isMore()){
+                   if (type==TYPE_PULLUP){
+                       mAdapter.setFooterText("没有更多数据");
+                   }
+                   return;
+               }
                ArrayList<NewGoodsBean> newGoodslist = GoodsDao.util.array2List(result);
-               mAdapter.initData(newGoodslist);
+               mAdapter.setFooterText("加载更多数据...");
+               switch (type){
+                   case TYPE_DOWNLOAD:
+                       mAdapter.initData(newGoodslist);
+                       break;
+                   case TYPE_PULLDOWN:
+                       mAdapter.initData(newGoodslist);
+                       msrfl.setRefreshing(false);
+                       break;
+                   case TYPE_PULLUP:
+                       mAdapter.addData(newGoodslist);
+                       break;
+               }
+
            }
 
            @Override
@@ -85,7 +160,7 @@ public class NewGoodsFragment extends Fragment {
                 getResources().getColor(R.color.google_red),
                 getResources().getColor(R.color.google_yellow)
         );
-        GridLayoutManager glm = new GridLayoutManager(mcontext, I.COLUM_NUM);
+        glm = new GridLayoutManager(mcontext, I.COLUM_NUM);
         mlist = new ArrayList<>();
         mAdapter = new NewGoodsAdapter(mcontext,mlist);
         mrecv.setLayoutManager(glm);
