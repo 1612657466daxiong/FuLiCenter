@@ -7,8 +7,8 @@ import android.content.Context;
  * Created by Administrator on 2016/10/13.
  */
 public class FuLiCenterApplication extends Application {
-   static   FuLiCenterApplication applicationContext;
-    private FuLiCenterApplication(){
+   static FuLiCenterApplication applicationContext;
+    public FuLiCenterApplication(){
         applicationContext =this;
     }
     public static   FuLiCenterApplication getInstance() {

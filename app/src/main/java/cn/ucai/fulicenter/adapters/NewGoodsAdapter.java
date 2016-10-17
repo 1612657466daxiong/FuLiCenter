@@ -33,6 +33,14 @@ public class NewGoodsAdapter extends RecyclerView.Adapter {
 
     RecyclerView parent;
 
+    public void initData(ArrayList<NewGoodsBean> list){
+        if (mgoodlist!=null){
+            mgoodlist.clear();
+        }
+        mgoodlist.addAll(list);
+        notifyDataSetChanged();
+    }
+
     public NewGoodsAdapter(Context mcontext, ArrayList<NewGoodsBean> mgoodlist) {
         this.mcontext = mcontext;
         this.mgoodlist = mgoodlist;
