@@ -8,7 +8,7 @@
     android:layout_width="195dp"
     android:layout_height="300dp" />
     <TextView
-        android:id="@+id/tv_introduction"
+        android:id="@+id/tv_goodsname"
         android:layout_width="195dp"
         android:layout_height="wrap_content"
         android:textSize="20sp"

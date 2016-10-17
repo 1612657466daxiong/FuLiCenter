@@ -11,25 +11,27 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.NewGoodsBean;
+import cn.ucai.fulicenter.utils.ImageLoader;
 
 /**
  * Created by Administrator on 2016/10/17.
  */
 public class NewGoodsAdapter extends RecyclerView.Adapter {
-    static final int TYPE_FOOTER = 0;
-    static final int TYPE_NEWGOODS = 1;
+
 
     Context mcontext;
     ArrayList<NewGoodsBean> mgoodlist;
     @Bind(R.id.im_newgoods)
     ImageView imNewgoods;
-    @Bind(R.id.tv_introduction)
-    TextView tvIntroduction;
+    @Bind(R.id.tv_goodsname)
+    TextView tv_goodsname;
     @Bind(R.id.tv_price)
     TextView tvPrice;
 
+    RecyclerView parent;
 
     public NewGoodsAdapter(Context mcontext, ArrayList<NewGoodsBean> mgoodlist) {
         this.mcontext = mcontext;
@@ -38,21 +40,38 @@ public class NewGoodsAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        this.parent= (RecyclerView) parent;
         RecyclerView.ViewHolder holder = null;
         View view = null;
-        if (viewType == TYPE_FOOTER) {
+        if (viewType == I.TYPE_FOOTER) {
             view = View.inflate(mcontext, R.layout.footer_layout, null);
             holder = new FooterViewHolder(view);
-            return holder;
         } else {
             view = View.inflate(mcontext, R.layout.new_goods_layout, null);
             holder = new NewGoodsViewHolder(view);
-            return holder;
         }
+        return holder;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if (getItemViewType(position)== I.TYPE_FOOTER){
+            FooterViewHolder footerViewHolder = (FooterViewHolder) holder;
+            footerViewHolder.tvFooter.setText("没有更多数据加载");
+            return;
+        }
+        NewGoodsViewHolder newGoodsViewHolder = (NewGoodsViewHolder) holder;
+        NewGoodsBean newgood = mgoodlist.get(position);
+        newGoodsViewHolder.tv_goodsname.setText(newgood.getGoodsName());
+        newGoodsViewHolder.tvPrice.setText(newgood.getCurrencyPrice());
+        ImageLoader.build(I.SERVER_ROOT+I.REQUEST_DOWNLOAD_IMAGE)
+                .addParam(I.IMAGE_URL,newgood.getGoodsImg())
+                .imageView(newGoodsViewHolder.imNewgoods)
+                .width(195)
+                .height(300)
+                .defaultPicture(R.drawable.nopic)
+                .listener(parent)
+                .showImage(mcontext);
 
     }
 
@@ -64,9 +83,9 @@ public class NewGoodsAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemViewType(int position) {
         if (position == getItemCount() - 1) {
-            return TYPE_FOOTER;
+            return I.TYPE_FOOTER;
         } else {
-            return TYPE_NEWGOODS;
+            return I.TYPE_ITEM;
         }
     }
 
@@ -83,8 +102,8 @@ public class NewGoodsAdapter extends RecyclerView.Adapter {
     static class NewGoodsViewHolder extends RecyclerView.ViewHolder{
         @Bind(R.id.im_newgoods)
         ImageView imNewgoods;
-        @Bind(R.id.tv_introduction)
-        TextView tvIntroduction;
+        @Bind(R.id.tv_goodsname)
+        TextView tv_goodsname;
         @Bind(R.id.tv_price)
         TextView tvPrice;
 

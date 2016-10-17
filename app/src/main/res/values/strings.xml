@@ -10,4 +10,7 @@
     <string name="cart_text">购物车</string>
     <string name="personal_center_text">我</string>
     <string name="boutique_text">精品</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
