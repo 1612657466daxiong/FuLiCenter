@@ -5,12 +5,18 @@
     android:layout_height="match_parent"
     tools:context=".activitys.MainActivity"
     android:background="@color/list_background">
+    <RelativeLayout
+        android:id="@+id/rlayout"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <RadioGroup
         android:id="@+id/rg_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal">
+
         <RadioButton
             android:id="@+id/rb_boutique"
             android:layout_weight="1"
@@ -44,33 +50,9 @@
             android:gravity="center"
             android:textSize="20sp"
             android:button="@null"/>
-        <RelativeLayout
-            android:id="@+id/rvlcart"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            >
-        <RadioButton
-            android:id="@+id/rb_cart"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableTop="@drawable/selector_menu_item_cart"
-            android:text="@string/cart_text"
-            android:textColor="@color/main_botton_text_color"
-            android:gravity="center"
-            android:textSize="20sp"
-            android:button="@null"/>
-            <TextView
-                android:id="@+id/tv_cart_hint"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/cart_hint"
-                android:layout_alignEnd="@id/rb_cart"
-                android:layout_alignTop="@id/rb_cart"
-                android:textColor="@color/black"
-                android:text="10"
-                />
-        </RelativeLayout>
+
+
+
         <RadioButton
             android:id="@+id/rb_personal_center"
             android:layout_weight="1"
@@ -82,12 +64,36 @@
             android:gravity="center"
             android:textSize="20sp"
             android:button="@null"/>
+        <RadioButton
+            android:layout_weight="1"
+            android:id="@+id/rb_cart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/selector_menu_item_cart"
+            android:text="@string/cart_text"
+            android:textColor="@color/main_botton_text_color"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:button="@null"/>
 
     </RadioGroup>
+    <TextView
+        android:id="@+id/tv_cart_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/cart_hint"
+        android:textColor="@color/black"
+        android:layout_alignTop="@id/rg_menu"
+        android:layout_alignRight="@id/rg_menu"
+        android:text="10"
+        />
+    </RelativeLayout>
+
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_above="@id/rg_menu"
+        android:layout_above="@id/rlayout"
         android:background="#2f2f29"
         android:layout_marginBottom="5dp"/>
 
