@@ -17,6 +17,7 @@ import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.activitys.GoodsDetActivity;
 import cn.ucai.fulicenter.bean.NewGoodsBean;
 import cn.ucai.fulicenter.utils.ImageLoader;
+import cn.ucai.fulicenter.utils.MFGT;
 
 /**
  * Created by Administrator on 2016/10/17.
@@ -92,8 +93,7 @@ public class NewGoodsAdapter extends RecyclerView.Adapter {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mcontext.startActivity(new Intent(mcontext, GoodsDetActivity.class)
-                        .putExtra(I.NewGoods.KEY_GOODS_ID,goodsid));
+                MFGT.gotoGoodsDetailsActivity(mcontext,goodsid);
             }
         });
         return holder;

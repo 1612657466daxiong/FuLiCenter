@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="cn.ucai.fulicenter.activitys.GoodsDetActivity">
@@ -107,13 +108,18 @@
     android:layout_centerHorizontal="true"
     android:layout_marginTop="50dp"
     android:src="@drawable/nopic"/>
-    <View
+
+    <cn.ucai.fulicenter.views.FlowIndicator
         android:id="@+id/id_diy_view"
         android:layout_below="@id/iv_det_goods"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="wrap_content"
+       app:count="5"
+        app:focus="2"
+        app:focus_color="@color/red"
+        app:normal_color="@color/orange"
 
-    </View>
+        />
     <TextView
         android:layout_below="@id/id_diy_view"
         android:layout_width="match_parent"
