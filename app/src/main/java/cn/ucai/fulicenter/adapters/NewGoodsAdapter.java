@@ -7,14 +7,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.activitys.GoodsDetActivity;
+import cn.ucai.fulicenter.activitys.MainActivity;
 import cn.ucai.fulicenter.bean.NewGoodsBean;
 import cn.ucai.fulicenter.utils.ImageLoader;
 import cn.ucai.fulicenter.utils.MFGT;
@@ -88,14 +91,16 @@ public class NewGoodsAdapter extends RecyclerView.Adapter {
         } else {
             view = View.inflate(mcontext, R.layout.new_goods_layout, null);
             holder = new NewGoodsViewHolder(view);
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int goodsid = (int) v.getTag();
+                     MFGT.gotoGoodsDetailsActivity(mcontext,goodsid);
+                }
+            });
         }
-        final int goodsid = (int)holder.itemView.getTag(1);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MFGT.gotoGoodsDetailsActivity(mcontext,goodsid);
-            }
-        });
+
         return holder;
     }
 
@@ -111,7 +116,7 @@ public class NewGoodsAdapter extends RecyclerView.Adapter {
         newGoodsViewHolder.tv_goodsname.setText(newgood.getGoodsName());
         newGoodsViewHolder.tvPrice.setText(newgood.getCurrencyPrice());
         ImageLoader.downloadImg(mcontext,newGoodsViewHolder.imNewgoods,newgood.getGoodsThumb());
-        newGoodsViewHolder.itemView.setTag(1,newgood.getGoodsId());
+        newGoodsViewHolder.itemView.setTag(newgood.getGoodsId());
 
     }
 

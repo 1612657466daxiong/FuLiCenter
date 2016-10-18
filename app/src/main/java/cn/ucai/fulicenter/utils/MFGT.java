@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import cn.ucai.fulicenter.I;
+import cn.ucai.fulicenter.activitys.GoodsDetActivity;
 import cn.ucai.fulicenter.activitys.MainActivity;
 import cn.ucai.fulicenter.R;
 
@@ -26,6 +27,7 @@ public class MFGT {
     public static void gotoGoodsDetailsActivity(Context context, int goodsid){
         Intent intent = new Intent();
         intent.putExtra(I.NewGoods.KEY_GOODS_ID,goodsid);
+        intent.setClass(context, GoodsDetActivity.class);
        startActivity(context,intent);
     }
     public static void startActivity(Context context,Intent intent){
