@@ -27,6 +27,7 @@ import cn.ucai.fulicenter.bean.NewGoodsBean;
 import cn.ucai.fulicenter.bean.Result;
 import cn.ucai.fulicenter.net.GoodsDao;
 import cn.ucai.fulicenter.net.OkHttpUtils;
+import cn.ucai.fulicenter.utils.ImageLoader;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -84,7 +85,7 @@ public class NewGoodsFragment extends Fragment {
                 msrfl.setEnabled(true);
                 mtvSrfHint.setVisibility(View.VISIBLE);
                 initData(TYPE_PULLDOWN,pageid);
-                mtvSrfHint.setVisibility(View.GONE);
+
             }
         });
     }
@@ -128,6 +129,7 @@ public class NewGoodsFragment extends Fragment {
                    }
                    return;
                }
+
                ArrayList<NewGoodsBean> newGoodslist = GoodsDao.util.array2List(result);
                mAdapter.setFooterText("加载更多数据...");
                switch (type){
@@ -137,6 +139,8 @@ public class NewGoodsFragment extends Fragment {
                    case TYPE_PULLDOWN:
                        mAdapter.initData(newGoodslist);
                        msrfl.setRefreshing(false);
+                       mtvSrfHint.setVisibility(View.GONE);
+                       ImageLoader.release();
                        break;
                    case TYPE_PULLUP:
                        mAdapter.addData(newGoodslist);
@@ -163,8 +167,8 @@ public class NewGoodsFragment extends Fragment {
         glm = new GridLayoutManager(mcontext, I.COLUM_NUM);
         mlist = new ArrayList<>();
         mAdapter = new NewGoodsAdapter(mcontext,mlist);
-        mrecv.setLayoutManager(glm);
         mrecv.setHasFixedSize(true);
+        mrecv.setLayoutManager(glm);
         mrecv.setAdapter(mAdapter);
 
 

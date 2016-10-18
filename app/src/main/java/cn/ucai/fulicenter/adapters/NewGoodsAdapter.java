@@ -1,6 +1,7 @@
 package cn.ucai.fulicenter.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.activitys.GoodsDetActivity;
 import cn.ucai.fulicenter.bean.NewGoodsBean;
 import cn.ucai.fulicenter.utils.ImageLoader;
 
@@ -78,6 +80,7 @@ public class NewGoodsAdapter extends RecyclerView.Adapter {
         this.parent= (RecyclerView) parent;
         RecyclerView.ViewHolder holder = null;
         View view = null;
+
         if (viewType == I.TYPE_FOOTER) {
             view = View.inflate(mcontext, R.layout.footer_layout, null);
             holder = new FooterViewHolder(view);
@@ -85,6 +88,14 @@ public class NewGoodsAdapter extends RecyclerView.Adapter {
             view = View.inflate(mcontext, R.layout.new_goods_layout, null);
             holder = new NewGoodsViewHolder(view);
         }
+        final int goodsid = (int)holder.itemView.getTag(1);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mcontext.startActivity(new Intent(mcontext, GoodsDetActivity.class)
+                        .putExtra(I.NewGoods.KEY_GOODS_ID,goodsid));
+            }
+        });
         return holder;
     }
 
@@ -100,6 +111,7 @@ public class NewGoodsAdapter extends RecyclerView.Adapter {
         newGoodsViewHolder.tv_goodsname.setText(newgood.getGoodsName());
         newGoodsViewHolder.tvPrice.setText(newgood.getCurrencyPrice());
         ImageLoader.downloadImg(mcontext,newGoodsViewHolder.imNewgoods,newgood.getGoodsThumb());
+        newGoodsViewHolder.itemView.setTag(1,newgood.getGoodsId());
 
     }
 
