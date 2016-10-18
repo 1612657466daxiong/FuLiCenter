@@ -5,10 +5,119 @@
     android:layout_height="match_parent"
     tools:context="cn.ucai.fulicenter.activitys.GoodsDetActivity">
 <RelativeLayout
+    android:id="@+id/id_title"
     android:layout_width="match_parent"
-    android:layout_height="40dp"
-    android:background="">
+    android:layout_height="60dp"
+    android:background="@color/main_orange"
 
+    >
+<ImageView
+    android:id="@+id/id_ivback"
+    android:layout_alignParentStart="true"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:src="@drawable/back"/>
+    <TextView
+        android:layout_toRightOf="@id/id_ivback"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="商品详情"
+        android:gravity="center_vertical"
+        android:textSize="25sp"
+        android:textColor="@color/white"/>
+    <ImageView
+        android:id="@+id/id_ivshare"
+        android:layout_marginEnd="15dp"
+        android:layout_alignParentEnd="true"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:src="@drawable/selector_share_bg"
+        android:layout_centerVertical="true"/>
+    <ImageView
+        android:id="@+id/id_ivcollect"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:src="@mipmap/bg_collect_out"
+        android:layout_toLeftOf="@id/id_ivshare"
+        android:layout_marginRight="15dp"
+        android:layout_centerVertical="true"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:src="@mipmap/bg_cart_selected"
+        android:layout_toLeftOf="@id/id_ivcollect"
+        android:layout_marginRight="15dp"
+        android:layout_centerVertical="true"/>
 </RelativeLayout>
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:id="@+id/id_body_4tv"
+        android:layout_below="@id/id_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        >
+        <LinearLayout
+            android:layout_margin="15dp"
+            android:layout_weight="0.5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/tv_det_Englishname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="英文名"/>
+            <TextView
+                android:id="@+id/tv_det_Chinesename"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tv_det_Englishname"
+                android:text="中文名"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="15dp"
+            android:layout_weight="0.5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_det_sellprice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="销售价格"/>
+            <TextView
+                android:id="@+id/tv_det_willprice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tv_det_Englishname"
+                android:text="预售价格"
+                />
+        </LinearLayout>
+    </LinearLayout>
+<ImageView
+    android:id="@+id/iv_det_goods"
+    android:layout_width="150dp"
+    android:layout_height="150dp"
+    android:layout_below="@id/id_body_4tv"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="50dp"
+    android:src="@drawable/nopic"/>
+    <View
+        android:id="@+id/id_diy_view"
+        android:layout_below="@id/iv_det_goods"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+    </View>
+    <TextView
+        android:layout_below="@id/id_diy_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="信息"
+        android:layout_margin="20dp"/>
 </RelativeLayout>
