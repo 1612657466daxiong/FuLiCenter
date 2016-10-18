@@ -2,23 +2,29 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_margin="5dp">
 <ImageView
     android:id="@+id/im_newgoods"
     android:layout_width="250dp"
-    android:layout_height="300dp" />
+    android:layout_height="300dp"
+    android:layout_marginLeft="10dp"/>
     <TextView
         android:id="@+id/tv_goodsname"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:textColor="#00f"
-        android:hint="简介"/>
+        android:hint="简介"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"/>
     <TextView
         android:id="@+id/tv_price"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:textSize="15sp"
         android:textColor="#f00"
-        android:hint="价格"/>
+        android:hint="价格"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"/>
 </LinearLayout>

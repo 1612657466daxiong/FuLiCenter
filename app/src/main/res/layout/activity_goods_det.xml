@@ -43,6 +43,7 @@
         android:layout_marginRight="15dp"
         android:layout_centerVertical="true"/>
     <ImageView
+        android:id="@+id/id_iv_det_car"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:src="@mipmap/bg_cart_selected"
@@ -100,14 +101,14 @@
                 />
         </LinearLayout>
     </LinearLayout>
-<ImageView
+<cn.ucai.fulicenter.views.SlideAutoLoopView
     android:id="@+id/iv_det_goods"
     android:layout_width="150dp"
     android:layout_height="150dp"
     android:layout_below="@id/id_body_4tv"
     android:layout_centerHorizontal="true"
     android:layout_marginTop="50dp"
-    android:src="@drawable/nopic"/>
+    />
 
     <cn.ucai.fulicenter.views.FlowIndicator
         android:id="@+id/id_diy_view"
@@ -120,7 +121,8 @@
         app:normal_color="@color/orange"
 
         />
-    <TextView
+    <WebView
+        android:id="@+id/wv_details"
         android:layout_below="@id/id_diy_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
