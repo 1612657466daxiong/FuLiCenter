@@ -2,6 +2,7 @@ package cn.ucai.fulicenter.activitys;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.RadioButton;
@@ -35,34 +36,56 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.rlayout)
     RelativeLayout rlayout;
 
-    Fragment fragment;
 
+    int currIndex = 5;
+    Fragment[] fragments = new Fragment[5];
+
+    int index;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        fragments[0]=new BoutiqueFragment();
+        fragments[1]=new NewGoodsFragment();
     }
 
     @OnClick({R.id.rb_boutique, R.id.rb_new_good, R.id.rb_category, R.id.rb_personal_center, R.id.rb_cart})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.rb_boutique:
-                fragment= new BoutiqueFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_stay,fragment).show(fragment).commit();
+                index=0;
                 break;
             case R.id.rb_new_good:
-                fragment= new NewGoodsFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_stay, fragment).show(fragment).commit();
+                index=1;
                 break;
             case R.id.rb_category:
+                index=2;
                 break;
             case R.id.rb_personal_center:
+                index=3;
+
                 break;
             case R.id.rb_cart:
+                index=4;
                 break;
-
         }
+
+        setFragment();
+    }
+
+    private void setFragment() {
+        if (index!=currIndex){
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            if (currIndex<5){
+                ft.hide(fragments[currIndex]);
+            }
+            if (!fragments[index].isAdded()){
+                ft.add(R.id.fragment_stay,fragments[index]);
+            }
+            ft.show(fragments[index]).commit();
+        }
+        currIndex=index;
     }
 }

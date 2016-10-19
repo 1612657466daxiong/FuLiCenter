@@ -107,13 +107,13 @@ public class BoutiqueFragment extends Fragment {
         GoodsDao.downloadBoutiqueFirstPage(mcontext, new OkHttpUtils.OnCompleteListener<BoutiqueBean[]> (){
             @Override
             public void onSuccess(BoutiqueBean[] result) {
-                mAdapter.setMore(result!=null && result.length>0);
+                mAdapter.setMore(!(result.length<I.PAGE_SIZE_DEFAULT));
                 if (!mAdapter.isMore()){
                     if (type==I.ACTION_PULL_UP){
                         mAdapter.setFooterText("没有更多数据");
                     }
-                    return;
                 }
+
                 ArrayList<BoutiqueBean> boutiquelsit = ConvertUtils.array2List(result);
                 mAdapter.setFooterText("加载更多数据");
                 switch (type){

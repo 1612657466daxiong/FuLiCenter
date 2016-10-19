@@ -1,23 +1,21 @@
 package cn.ucai.fulicenter.adapters;
 
 import android.content.Context;
-import android.content.Intent;
+
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import cn.ucai.fulicenter.FuLiCenterApplication;
+
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
-import cn.ucai.fulicenter.activitys.GoodsDetActivity;
-import cn.ucai.fulicenter.activitys.MainActivity;
 import cn.ucai.fulicenter.bean.NewGoodsBean;
 import cn.ucai.fulicenter.utils.ImageLoader;
 import cn.ucai.fulicenter.utils.MFGT;
@@ -134,15 +132,6 @@ public class NewGoodsAdapter extends RecyclerView.Adapter {
         }
     }
 
-    static class FooterViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.tv_footer)
-        TextView tvFooter;
-
-        FooterViewHolder(View view) {
-            super(view);
-            ButterKnife.bind(this, view);
-        }
-    }
 
     static class NewGoodsViewHolder extends RecyclerView.ViewHolder{
         @Bind(R.id.im_newgoods)

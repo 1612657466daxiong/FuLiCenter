@@ -32,6 +32,7 @@ public class BoutiqueAdapter extends RecyclerView.Adapter {
 
     public void setMore(boolean more) {
         isMore = more;
+        notifyDataSetChanged();
     }
 
     public void setFooterText(String footerText) {
@@ -59,7 +60,7 @@ public class BoutiqueAdapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder holder = null;
         if (viewType == I.TYPE_FOOTER) {
-            holder = new NewGoodsAdapter.FooterViewHolder(LayoutInflater.from(mcontext).inflate(R.layout.footer_layout, parent, false));
+            holder = new FooterViewHolder(LayoutInflater.from(mcontext).inflate(R.layout.footer_layout, parent, false));
         } else {
             holder= new BoutiqueHolder(LayoutInflater.from(mcontext).inflate(R.layout.boutique_layout,parent,false));
         }
@@ -68,8 +69,8 @@ public class BoutiqueAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof NewGoodsAdapter.FooterViewHolder){
-            NewGoodsAdapter.FooterViewHolder footerViewHolder = (NewGoodsAdapter.FooterViewHolder) holder;
+        if (holder instanceof FooterViewHolder){
+            FooterViewHolder footerViewHolder = (FooterViewHolder) holder;
             footerViewHolder.tvFooter.setText(FooterText);
             return;
         }
