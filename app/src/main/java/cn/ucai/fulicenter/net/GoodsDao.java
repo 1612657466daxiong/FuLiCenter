@@ -3,6 +3,7 @@ package cn.ucai.fulicenter.net;
 import android.content.Context;
 
 import cn.ucai.fulicenter.I;
+import cn.ucai.fulicenter.bean.BoutiqueBean;
 import cn.ucai.fulicenter.bean.GoodsDetailsBean;
 import cn.ucai.fulicenter.bean.NewGoodsBean;
 
@@ -28,6 +29,13 @@ public class GoodsDao {
         utils.url(I.SERVER_ROOT+I.REQUEST_FIND_GOOD_DETAILS)
                 .addParam(I.GoodsDetails.KEY_GOODS_ID,String.valueOf(goodsid))
                 .targetClass(GoodsDetailsBean.class)
+                .execute(listener);
+    }
+
+    public static void  downloadBoutiqueFirstPage(Context context,OkHttpUtils.OnCompleteListener listener){
+        OkHttpUtils<BoutiqueBean[]> utils = new OkHttpUtils<>(context);
+        utils.url(I.SERVER_ROOT+I.REQUEST_FIND_BOUTIQUES)
+                .targetClass(BoutiqueBean[].class)
                 .execute(listener);
     }
 
