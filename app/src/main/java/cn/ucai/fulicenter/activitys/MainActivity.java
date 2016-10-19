@@ -1,6 +1,7 @@
 package cn.ucai.fulicenter.activitys;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.RadioButton;
@@ -12,6 +13,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.fragments.BoutiqueFragment;
 import cn.ucai.fulicenter.fragments.NewGoodsFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.rlayout)
     RelativeLayout rlayout;
 
-    NewGoodsFragment fragment;
+    Fragment fragment;
 
 
     @Override
@@ -43,17 +45,16 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.rb_boutique, R.id.rb_new_good, R.id.rb_category, R.id.rb_personal_center, R.id.rb_cart, R.id.tv_cart_hint})
+    @OnClick({R.id.rb_boutique, R.id.rb_new_good, R.id.rb_category, R.id.rb_personal_center, R.id.rb_cart})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.rb_boutique:
+                fragment= new BoutiqueFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_stay,fragment).show(fragment).commit();
                 break;
             case R.id.rb_new_good:
-                if (fragment!=null){
-                }else {
-                    fragment= new NewGoodsFragment();
-                    getSupportFragmentManager().beginTransaction().add(R.id.fragment_stay, fragment).show(fragment).commit();
-                }
+                fragment= new NewGoodsFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_stay, fragment).show(fragment).commit();
                 break;
             case R.id.rb_category:
                 break;
@@ -61,8 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.rb_cart:
                 break;
-            case R.id.tv_cart_hint:
-                break;
+
         }
     }
 }

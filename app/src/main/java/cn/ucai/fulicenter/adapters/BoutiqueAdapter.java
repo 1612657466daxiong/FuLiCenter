@@ -24,6 +24,15 @@ public class BoutiqueAdapter extends RecyclerView.Adapter {
     Context mcontext;
     ArrayList<BoutiqueBean> mlist;
 
+    boolean isMore;
+
+    public boolean isMore() {
+        return isMore;
+    }
+
+    public void setMore(boolean more) {
+        isMore = more;
+    }
 
     public void setFooterText(String footerText) {
         FooterText = footerText;
@@ -34,7 +43,18 @@ public class BoutiqueAdapter extends RecyclerView.Adapter {
         this.mcontext = mcontext;
         this.mlist = mlist;
     }
+    public void initData(ArrayList<BoutiqueBean> list){
+        if (mlist!=null){
+            mlist.clear();
+        }
+        mlist.addAll(list);
+        notifyDataSetChanged();
+    }
 
+    public void  addData(ArrayList<BoutiqueBean> list){
+        mlist.addAll(list);
+        notifyDataSetChanged();
+    }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder holder = null;
