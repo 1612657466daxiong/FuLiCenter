@@ -65,31 +65,9 @@ public class BoutiqueFragment extends Fragment {
 
     private void setListener() {
         setPullDownListener();
-        setPullUpListener();
     }
 
-    private void setPullUpListener() {
-        mRev.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            int lastposition;
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                lastposition = mlinerlayout.findLastVisibleItemPosition();
-                if (lastposition>=mAdapter.getItemCount()-1 && newState == RecyclerView.SCROLL_STATE_IDLE
-                        && mAdapter.isMore()){
-                    initData(I.ACTION_DOWNLOAD);
-                }
-                mAdapter.notifyDataSetChanged();
-            }
 
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                lastposition= mlinerlayout.findLastVisibleItemPosition();
-            }
-        });
-
-    }
 
     private void setPullDownListener() {
         mSrfl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -107,15 +85,7 @@ public class BoutiqueFragment extends Fragment {
         GoodsDao.downloadBoutiqueFirstPage(mcontext, new OkHttpUtils.OnCompleteListener<BoutiqueBean[]> (){
             @Override
             public void onSuccess(BoutiqueBean[] result) {
-                mAdapter.setMore(!(result.length<I.PAGE_SIZE_DEFAULT));
-                if (!mAdapter.isMore()){
-                    if (type==I.ACTION_PULL_UP){
-                        mAdapter.setFooterText("没有更多数据");
-                    }
-                }
-
                 ArrayList<BoutiqueBean> boutiquelsit = ConvertUtils.array2List(result);
-                mAdapter.setFooterText("加载更多数据");
                 switch (type){
                     case I.ACTION_DOWNLOAD:
                         mAdapter.initData(boutiquelsit);

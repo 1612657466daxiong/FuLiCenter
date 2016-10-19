@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import cn.ucai.fulicenter.I;
+
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.BoutiqueBean;
 import cn.ucai.fulicenter.utils.ImageLoader;
@@ -24,22 +24,7 @@ public class BoutiqueAdapter extends RecyclerView.Adapter {
     Context mcontext;
     ArrayList<BoutiqueBean> mlist;
 
-    boolean isMore;
 
-    public boolean isMore() {
-        return isMore;
-    }
-
-    public void setMore(boolean more) {
-        isMore = more;
-        notifyDataSetChanged();
-    }
-
-    public void setFooterText(String footerText) {
-        FooterText = footerText;
-    }
-
-    String FooterText;
     public BoutiqueAdapter(Context mcontext, ArrayList<BoutiqueBean> mlist) {
         this.mcontext = mcontext;
         this.mlist = mlist;
@@ -58,46 +43,27 @@ public class BoutiqueAdapter extends RecyclerView.Adapter {
     }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        RecyclerView.ViewHolder holder = null;
-        if (viewType == I.TYPE_FOOTER) {
-            holder = new FooterViewHolder(LayoutInflater.from(mcontext).inflate(R.layout.footer_layout, parent, false));
-        } else {
-            holder= new BoutiqueHolder(LayoutInflater.from(mcontext).inflate(R.layout.boutique_layout,parent,false));
-        }
+        RecyclerView.ViewHolder holder
+                = new BoutiqueHolder(LayoutInflater.from(mcontext).inflate(R.layout.boutique_layout,parent,false));
         return holder;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof FooterViewHolder){
-            FooterViewHolder footerViewHolder = (FooterViewHolder) holder;
-            footerViewHolder.tvFooter.setText(FooterText);
-            return;
-        }
-        if (holder instanceof  BoutiqueHolder){
             BoutiqueBean boutique = mlist.get(position);
             BoutiqueHolder boutiqueholder = (BoutiqueHolder) holder;
             boutiqueholder.boutiqueDes.setText(boutique.getDescription());
             boutiqueholder.boutiqueName.setText(boutique.getName());
             boutiqueholder.boutiqueTitle.setText(boutique.getTitle());
             ImageLoader.downloadImg(mcontext,boutiqueholder.ivBoutiqueGoods,boutique.getImageurl());
-        }
+
     }
 
     @Override
     public int getItemCount() {
-        return mlist == null ? 1 : mlist.size() + 1;
+        return mlist == null ? 0 : mlist.size();
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        if (position == getItemCount() - 1) {
-            return I.TYPE_FOOTER;
-        } else {
-            return I.TYPE_ITEM;
-        }
-
-    }
 
     static class BoutiqueHolder extends RecyclerView.ViewHolder{
         @Bind(R.id.iv_boutique_goods)
