@@ -16,6 +16,7 @@ import butterknife.ButterKnife;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.BoutiqueBean;
 import cn.ucai.fulicenter.utils.ImageLoader;
+import cn.ucai.fulicenter.utils.MFGT;
 
 /**
  * Created by Administrator on 2016/10/19.
@@ -42,9 +43,17 @@ public class BoutiqueAdapter extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        RecyclerView.ViewHolder holder
+    public RecyclerView.ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
+        final RecyclerView.ViewHolder holder
                 = new BoutiqueHolder(LayoutInflater.from(mcontext).inflate(R.layout.boutique_layout,parent,false));
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String title = (String) holder.itemView.getTag();
+                MFGT.gotoBoutiqueDetActivity(mcontext,title);
+            }
+        });
         return holder;
     }
 
@@ -56,6 +65,10 @@ public class BoutiqueAdapter extends RecyclerView.Adapter {
             boutiqueholder.boutiqueName.setText(boutique.getName());
             boutiqueholder.boutiqueTitle.setText(boutique.getTitle());
             ImageLoader.downloadImg(mcontext,boutiqueholder.ivBoutiqueGoods,boutique.getImageurl());
+            int catid = boutique.getId();
+
+            String title = boutique.getTitle();
+            holder.itemView.setTag(title+","+catid);
 
     }
 

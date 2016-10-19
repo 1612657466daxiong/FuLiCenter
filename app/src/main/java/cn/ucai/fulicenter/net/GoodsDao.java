@@ -39,5 +39,15 @@ public class GoodsDao {
                 .execute(listener);
     }
 
+    public static void downloadButiqueDetpage(Context context,int catid,int pageid,OkHttpUtils.OnCompleteListener listener){
+        OkHttpUtils<NewGoodsBean[]> utils = new OkHttpUtils<>(context);
+        utils.url(I.SERVER_ROOT+I.REQUEST_FIND_NEW_BOUTIQUE_GOODS)
+                .addParam(I.NewAndBoutiqueGoods.CAT_ID,String.valueOf(catid))
+                .addParam(I.PAGE_ID,String.valueOf(pageid))
+                .addParam(I.PAGE_SIZE,String.valueOf(I.PAGE_SIZE_DEFAULT))
+                .targetClass(NewGoodsBean[].class)
+                .execute(listener);
+    }
+
 
 }
