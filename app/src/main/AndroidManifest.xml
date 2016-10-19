@@ -21,7 +21,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activitys.MainActivity" />
-        <activity android:name=".activitys.GoodsDetActivity"></activity>
+        <activity android:name=".activitys.GoodsDetActivity" />
+        <activity android:name=".activitys.BoutiqueDetActivity"></activity>
     </application>
 
 </manifest>
