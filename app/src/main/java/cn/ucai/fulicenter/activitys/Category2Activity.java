@@ -7,7 +7,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -26,6 +25,7 @@ import cn.ucai.fulicenter.bean.NewGoodsBean;
 import cn.ucai.fulicenter.net.GoodsDao;
 import cn.ucai.fulicenter.net.OkHttpUtils;
 import cn.ucai.fulicenter.utils.ConvertUtils;
+import cn.ucai.fulicenter.views.CatChildFilterButton;
 
 public class Category2Activity extends AppCompatActivity {
 
@@ -34,16 +34,17 @@ public class Category2Activity extends AppCompatActivity {
     ArrayList<NewGoodsBean> mlist;
     NewGoodsAdapter mAdapter;
     GridLayoutManager mglm;
-    boolean addtimeAsc=false;
-    boolean priceAsc=false;
+    boolean addtimeAsc = false;
+    boolean priceAsc = false;
     int sortby;
 
     int goodsid;
     int pageid = 1;
+    String name;
+    ArrayList<CategoryChildBean> list;
     @Bind(R.id.category_2back)
     ImageView m2back;
-    @Bind(R.id.category_title)
-    TextView mTitle;
+
     @Bind(R.id.category_2pricesort)
     RadioButton m2pricesort;
     @Bind(R.id.category_2addtimesort)
@@ -54,6 +55,8 @@ public class Category2Activity extends AppCompatActivity {
     RecyclerView m2recv;
     @Bind(R.id.category_2srfl)
     SwipeRefreshLayout m2srfl;
+    @Bind(R.id.btnCatChildFilter)
+    CatChildFilterButton btnCatChildFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,37 +65,38 @@ public class Category2Activity extends AppCompatActivity {
         ButterKnife.bind(this);
         mcontext = this;
         goodsid = getIntent().getIntExtra(I.Category.KEY_ID, 0);
-        if (goodsid==0){
+        if (goodsid == 0) {
             finish();
         }
-         String name = getIntent().getStringExtra(I.Category.KEY_NAME);
-         ArrayList<CategoryChildBean> list= (ArrayList<CategoryChildBean>) getIntent().getSerializableExtra(I.CategoryChild.CAT_ID);
+        name = getIntent().getStringExtra(I.Category.KEY_NAME);
+        list = (ArrayList<CategoryChildBean>) getIntent().getSerializableExtra("list");
         initView();
         initData();
     }
-    @OnClick({R.id.category_2pricesort,R.id.category_2addtimesort})
-    public void onClick(View view){
-        Drawable right=null;
-        switch (view.getId()){
+
+    @OnClick({R.id.category_2pricesort, R.id.category_2addtimesort})
+    public void onClick(View view) {
+        Drawable right = null;
+        switch (view.getId()) {
             case R.id.category_2addtimesort:
-            if (addtimeAsc) {
-                sortby=I.SORT_BY_ADDTIME_ASC;
-            }else {
-                sortby=I.SORT_BY_ADDTIME_DESC;
-            }
-                addtimeAsc=!addtimeAsc;
-                right.setBounds(0,0,right.getIntrinsicWidth(),right.getIntrinsicWidth());
-                m2addtimesort.setCompoundDrawablesRelativeWithIntrinsicBounds(null,null,right,null);
+                if (addtimeAsc) {
+                    sortby = I.SORT_BY_ADDTIME_ASC;
+                } else {
+                    sortby = I.SORT_BY_ADDTIME_DESC;
+                }
+                addtimeAsc = !addtimeAsc;
+                right.setBounds(0, 0, right.getIntrinsicWidth(), right.getIntrinsicWidth());
+                m2addtimesort.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, right, null);
                 break;
             case R.id.category_2pricesort:
                 if (priceAsc) {
-                    sortby=I.SORT_BY_PRICE_ASC;
-                }else {
-                    sortby=I.SORT_BY_PRICE_DESC;
+                    sortby = I.SORT_BY_PRICE_ASC;
+                } else {
+                    sortby = I.SORT_BY_PRICE_DESC;
                 }
-                priceAsc=!priceAsc;
-                right.setBounds(0,0,right.getIntrinsicWidth(),right.getIntrinsicWidth());
-                m2pricesort.setCompoundDrawablesRelativeWithIntrinsicBounds(null,null,right,null);
+                priceAsc = !priceAsc;
+                right.setBounds(0, 0, right.getIntrinsicWidth(), right.getIntrinsicWidth());
+                m2pricesort.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, right, null);
                 break;
         }
         mAdapter.setSortBy(sortby);
@@ -105,10 +109,11 @@ public class Category2Activity extends AppCompatActivity {
         m2recv.setHasFixedSize(true);
         mglm = new GridLayoutManager(mcontext, I.COLUM_NUM);
         m2recv.setLayoutManager(mglm);
-
+        btnCatChildFilter.setTag(name);
     }
 
     protected void initData() {
+        btnCatChildFilter.setOnCatFilterClickListener(name,list);
         GoodsDao.dowlaodCategory3list(mcontext, goodsid, pageid, new OkHttpUtils.OnCompleteListener<NewGoodsBean[]>() {
             @Override
             public void onSuccess(NewGoodsBean[] result) {

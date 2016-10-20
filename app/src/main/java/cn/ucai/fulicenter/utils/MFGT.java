@@ -49,7 +49,7 @@ public class MFGT {
         Intent intent = new Intent();
         intent.putExtra(I.Category.KEY_NAME,name);
         intent.putExtra(I.Category.KEY_ID,id);
-        intent.putExtra(I.CategoryChild.CAT_ID,list);
+        intent.putExtra("list",list);
         intent.setClass(context, Category2Activity.class);
         startActivity(context,intent);
     }

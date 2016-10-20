@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 
+import cn.ucai.fulicenter.activitys.Category2Activity;
 import cn.ucai.fulicenter.bean.CategoryChildBean;
 import cn.ucai.fulicenter.utils.ConvertUtils;
 import cn.ucai.fulicenter.utils.ImageLoader;
@@ -128,36 +129,36 @@ public class CatChildFilterButton extends Button {
         @Override
         public View getView(int position, View layout, final ViewGroup parent) {
             ViewChildHolder holder=null;
-//            if(layout==null){
-//                layout= View.inflate(context, R.layout.item_cat_filter, null);
-//                holder=new ViewChildHolder();
-//                holder.layoutItem=(RelativeLayout) layout.findViewById(R.id.layout_category_child);
-//                holder.ivThumb=(ImageView) layout.findViewById(R.id.ivCategoryChildThumb);
-//                holder.tvChildName=(TextView) layout.findViewById(R.id.tvCategoryChildName);
-//                layout.setTag(holder);
-//            }else{
-//                holder=(ViewChildHolder) layout.getTag();
-//            }
-//            final CategoryChildBean child =getItem(position);
-//            String name=child.getName();
-//            holder.tvChildName.setText(name);
-//            String imgUrl=child.getImageUrl();
-//            ImageLoader.downloadImg(context,holder.ivThumb,imgUrl);
-//
-//            holder.layoutItem.setOnClickListener(new OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    if(mPopupWindow.isShowing()){
-//                        mPopupWindow.dismiss();
-//                    }
-//                    Intent intent=new Intent(mContext, CategoryChildActivity.class);
-//                    intent.putExtra(I.CategoryChild.CAT_ID, child.getId());
-//                    intent.putExtra("childList", Children);
-//                    intent.putExtra(I.CategoryGroup.NAME, mbtnTop.getText().toString());
-//                    mContext.startActivity(intent);
-//                    ((CategoryChildActivity)mContext).finish();
-//                }
-//            });
+               if(layout==null){
+                layout= View.inflate(context, R.layout.item_cat_filter, null);
+                holder=new ViewChildHolder();
+                holder.layoutItem=(RelativeLayout) layout.findViewById(R.id.layout_category_child);
+                holder.ivThumb=(ImageView) layout.findViewById(R.id.ivCategoryChildThumb);
+                holder.tvChildName=(TextView) layout.findViewById(R.id.tvCategoryChildName);
+                layout.setTag(holder);
+            }else{
+                holder=(ViewChildHolder) layout.getTag();
+            }
+            final CategoryChildBean child =getItem(position);
+            String name=child.getName();
+            holder.tvChildName.setText(name);
+            String imgUrl=child.getImageUrl();
+            ImageLoader.downloadImg(context,holder.ivThumb,imgUrl);
+
+            holder.layoutItem.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(mPopupWindow.isShowing()){
+                        mPopupWindow.dismiss();
+                    }
+                    Intent intent=new Intent(mContext, Category2Activity.class);
+                    intent.putExtra(I.Category.KEY_NAME, mbtnTop.getText().toString());
+                    intent.putExtra(I.Category.KEY_ID,child.getId());
+                    intent.putExtra("list",Children);
+                    mContext.startActivity(intent);
+                    ((Category2Activity)mContext).finish();
+                }
+            });
             return layout;
         }
 
