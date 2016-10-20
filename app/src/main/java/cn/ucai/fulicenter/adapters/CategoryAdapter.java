@@ -24,6 +24,7 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
     ArrayList<CategoryGroupBean> mgrouplist;
     ArrayList<ArrayList<CategoryChildBean>> mchildlist;
 
+
     public CategoryAdapter(Context mcontext, ArrayList<CategoryGroupBean> mgrouplist, ArrayList<ArrayList<CategoryChildBean>> mchildlist) {
         this.mcontext = mcontext;
         this.mgrouplist = mgrouplist;
@@ -37,7 +38,7 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return mchildlist != null && mgrouplist != null ? mchildlist.get(groupPosition).size() : 0;
+        return mchildlist != null && mchildlist.get(groupPosition) != null ? mchildlist.get(groupPosition).size() : 0;
     }
 
     @Override
@@ -63,6 +64,13 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
     @Override
     public boolean hasStableIds() {
         return false;
+    }
+    public void initdata(ArrayList<CategoryGroupBean> grouplist,ArrayList<ArrayList<CategoryChildBean>> childlist){
+        mgrouplist.clear();
+        mgrouplist.addAll(grouplist);
+        mchildlist.clear();
+        mchildlist.addAll(childlist);
+        notifyDataSetChanged();
     }
 
     @Override

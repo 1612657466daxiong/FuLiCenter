@@ -4,6 +4,8 @@ import android.content.Context;
 
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.bean.BoutiqueBean;
+import cn.ucai.fulicenter.bean.CategoryChildBean;
+import cn.ucai.fulicenter.bean.CategoryGroupBean;
 import cn.ucai.fulicenter.bean.GoodsDetailsBean;
 import cn.ucai.fulicenter.bean.NewGoodsBean;
 
@@ -46,6 +48,21 @@ public class GoodsDao {
                 .addParam(I.PAGE_ID,String.valueOf(pageid))
                 .addParam(I.PAGE_SIZE,String.valueOf(I.PAGE_SIZE_DEFAULT))
                 .targetClass(NewGoodsBean[].class)
+                .execute(listener);
+    }
+
+    public static void downloadGroupList(Context context,OkHttpUtils.OnCompleteListener listener){
+        OkHttpUtils<CategoryGroupBean[]> utils = new OkHttpUtils<>(context);
+        utils.url(I.SERVER_ROOT+I.REQUEST_FIND_CATEGORY_GROUP)
+                .targetClass(CategoryGroupBean[].class)
+                .execute(listener);
+    }
+
+    public static void downloadChildList(Context context,int groupid,OkHttpUtils.OnCompleteListener listener){
+        OkHttpUtils<CategoryChildBean[]> utils = new OkHttpUtils<>(context);
+        utils.url(I.SERVER_ROOT+"findCategoryChildren")
+                .addParam(I.CategoryChild.PARENT_ID,String.valueOf(groupid))
+                .targetClass(CategoryChildBean[].class)
                 .execute(listener);
     }
 
