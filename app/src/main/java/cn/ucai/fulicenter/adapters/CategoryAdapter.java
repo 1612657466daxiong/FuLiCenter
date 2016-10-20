@@ -113,14 +113,14 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
             holder.tvChild.setText(categoryChildBean.getName());
             ImageLoader.downloadImg(mcontext, holder.ivChild, categoryChildBean.getImageUrl());
             final int id = categoryChildBean.getId();
-            Log.i("main",id+"============================");
+
             final String name =  mgrouplist.get(groupPosition).getName();
-            Log.i("main",name+"============================");
+            final ArrayList<CategoryChildBean> list = mchildlist.get(groupPosition);
 
            holder.childRe.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View v) {
-                MFGT.gotoCategory2Activity(mcontext,name,id);
+                MFGT.gotoCategory2Activity(mcontext,name,id,list);
                }
            });
         }

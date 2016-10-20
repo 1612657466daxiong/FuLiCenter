@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -34,6 +36,14 @@ public class NewGoodsAdapter extends RecyclerView.Adapter {
     TextView tv_goodsname;
     @Bind(R.id.tv_price)
     TextView tvPrice;
+
+    int sortBy=I.SORT_BY_ADDTIME_DESC;
+
+    public void setSortBy(int sortBy) {
+        this.sortBy = sortBy;
+        sortBy();
+        notifyDataSetChanged();
+    }
 
     RecyclerView parent;
 
@@ -145,5 +155,33 @@ public class NewGoodsAdapter extends RecyclerView.Adapter {
             super(view);
             ButterKnife.bind(this, view);
         }
+    }
+
+    private void sortBy(){
+        Collections.sort(mgoodlist, new Comparator<NewGoodsBean>() {
+            @Override
+            public int compare(NewGoodsBean left, NewGoodsBean right) {
+                int result=0;
+                switch (sortBy){
+                    case I.SORT_BY_ADDTIME_ASC:
+                        result= (int) (Long.valueOf(left.getAddTime())-Long.valueOf(right.getAddTime()));
+                        break;
+                    case I.SORT_BY_ADDTIME_DESC:
+                        result= (int) (Long.valueOf(right.getAddTime())-Long.valueOf(left.getAddTime()));
+                        break;
+                    case I.SORT_BY_PRICE_ASC:
+                        result= getPrice(left.getShopPrice())-getPrice(right.getShopPrice());
+                        break;
+                    case I.SORT_BY_PRICE_DESC:
+                        result= getPrice(right.getShopPrice())-getPrice(left.getShopPrice());
+                        break;
+                }
+                return result;
+            }
+            private int getPrice(String price){
+                price=price.substring(price.indexOf("￥")+1);
+                return Integer.parseInt(price);
+            }
+        });
     }
 }

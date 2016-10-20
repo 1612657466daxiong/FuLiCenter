@@ -45,10 +45,11 @@ public class MFGT {
         intent.setClass(context, BoutiqueDetActivity.class);
         startActivity(context,intent);
     }
-    public static void gotoCategory2Activity(Context context, String name, int id){
+    public static void gotoCategory2Activity(Context context, String name, int id,ArrayList<CategoryChildBean> list){
         Intent intent = new Intent();
         intent.putExtra(I.Category.KEY_NAME,name);
         intent.putExtra(I.Category.KEY_ID,id);
+        intent.putExtra(I.CategoryChild.CAT_ID,list);
         intent.setClass(context, Category2Activity.class);
         startActivity(context,intent);
     }

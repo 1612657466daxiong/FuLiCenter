@@ -32,6 +32,7 @@
         android:background="@color/orange"
         android:orientation="horizontal">
       <RadioButton
+          android:id="@+id/category_2pricesort"
           android:text="价格"
           android:textColor="@color/white"
           android:layout_weight="1"
@@ -39,8 +40,11 @@
           android:layout_height="match_parent"
           android:button="@null"
           android:drawableEnd="@mipmap/arrow_order_down"
-          android:padding="2dp"/>
+          android:padding="2dp"
+          android:gravity="center_horizontal"
+          android:textSize="20sp"/>
         <RadioButton
+            android:id="@+id/category_2addtimesort"
             android:text="上架时间"
             android:textColor="@color/white"
             android:layout_weight="1"
@@ -48,7 +52,9 @@
             android:layout_height="match_parent"
             android:button="@null"
             android:drawableEnd="@mipmap/arrow_order_down"
-            android:padding="2dp"/>
+            android:padding="2dp"
+            android:gravity="center_horizontal"
+            android:textSize="20sp"/>
     </LinearLayout>
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/category_2srfl"
