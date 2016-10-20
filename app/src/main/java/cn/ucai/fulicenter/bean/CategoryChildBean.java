@@ -1,9 +1,11 @@
 package cn.ucai.fulicenter.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2016/10/13.
  */
-public class CategoryChildBean {
+public class CategoryChildBean implements Serializable{
 
     /**
      * id : 345

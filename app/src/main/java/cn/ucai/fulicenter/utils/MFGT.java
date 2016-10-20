@@ -4,12 +4,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
+import java.util.ArrayList;
+
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.activitys.BoutiqueDetActivity;
 import cn.ucai.fulicenter.activitys.Category2Activity;
 import cn.ucai.fulicenter.activitys.GoodsDetActivity;
 import cn.ucai.fulicenter.activitys.MainActivity;
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.bean.CategoryChildBean;
 
 
 public class MFGT {
@@ -42,9 +45,10 @@ public class MFGT {
         intent.setClass(context, BoutiqueDetActivity.class);
         startActivity(context,intent);
     }
-    public static void gotoCategory2Activity(Context context, String name_id){
+    public static void gotoCategory2Activity(Context context, String name, int id){
         Intent intent = new Intent();
-        intent.putExtra("name_id",name_id);
+        intent.putExtra(I.Category.KEY_NAME,name);
+        intent.putExtra(I.Category.KEY_ID,id);
         intent.setClass(context, Category2Activity.class);
         startActivity(context,intent);
     }

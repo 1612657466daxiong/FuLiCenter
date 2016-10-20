@@ -53,7 +53,7 @@ public class CategoryFragment extends BaseFragment {
     protected void initView() {
         mcontext= (MainActivity) getContext();
         mgrouplist = new ArrayList<>();
-        mchildlist= new ArrayList<ArrayList<CategoryChildBean>>();
+        mchildlist= new ArrayList<>();
         mAdapter=new CategoryAdapter(mcontext,mgrouplist,mchildlist);
         meplvCategory.setGroupIndicator(null);
         meplvCategory.setAdapter(mAdapter);
@@ -91,6 +91,7 @@ public class CategoryFragment extends BaseFragment {
         GoodsDao.downloadChildList(mcontext, id, new OkHttpUtils.OnCompleteListener<CategoryChildBean[]>() {
             @Override
             public void onSuccess(CategoryChildBean[] result) {
+
                 if (result!=null){
                     ArrayList<CategoryChildBean> categoryChildBeen = ConvertUtils.array2List(result);
                     mchildlist.set(index,categoryChildBeen);

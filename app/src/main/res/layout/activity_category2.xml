@@ -31,37 +31,24 @@
         android:layout_height="30dp"
         android:background="@color/orange"
         android:orientation="horizontal">
-        <TextView
-            android:layout_weight="1"
-            android:id="@+id/category_2price_sort"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="价格"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:gravity="center_vertical"
-            android:paddingLeft="50dp"
-          />
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@drawable/arrow_order_up"/>
-        <TextView
-            android:layout_weight="1"
-            android:id="@+id/category_2time_sort"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+      <RadioButton
+          android:text="价格"
+          android:textColor="@color/white"
+          android:layout_weight="1"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:button="@null"
+          android:drawableEnd="@mipmap/arrow_order_down"
+          android:padding="2dp"/>
+        <RadioButton
             android:text="上架时间"
             android:textColor="@color/white"
-            android:textSize="20sp"
-            android:gravity="center_vertical"
-            android:paddingLeft="50dp"
-            />
-        <ImageView
-            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/arrow_order_down"
-            android:layout_marginRight="10dp"/>
+            android:button="@null"
+            android:drawableEnd="@mipmap/arrow_order_down"
+            android:padding="2dp"/>
     </LinearLayout>
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/category_2srfl"
