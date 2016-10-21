@@ -10,8 +10,10 @@ import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.activitys.BoutiqueDetActivity;
 import cn.ucai.fulicenter.activitys.Category2Activity;
 import cn.ucai.fulicenter.activitys.GoodsDetActivity;
+import cn.ucai.fulicenter.activitys.LoginActivity;
 import cn.ucai.fulicenter.activitys.MainActivity;
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.activitys.RegisterActivity;
 import cn.ucai.fulicenter.bean.CategoryChildBean;
 
 
@@ -52,6 +54,12 @@ public class MFGT {
         intent.putExtra("list",list);
         intent.setClass(context, Category2Activity.class);
         startActivity(context,intent);
+    }
+    public static void gotoLoginActivity(Activity context){
+        startActivity(context, LoginActivity.class);
+    }
+    public static void gotoRegister(Activity context){
+        startActivity(context, RegisterActivity.class);
     }
 
 }

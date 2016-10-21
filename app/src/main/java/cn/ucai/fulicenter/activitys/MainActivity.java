@@ -1,5 +1,6 @@
 package cn.ucai.fulicenter.activitys;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -17,6 +18,7 @@ import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.fragments.BoutiqueFragment;
 import cn.ucai.fulicenter.fragments.CategoryFragment;
 import cn.ucai.fulicenter.fragments.NewGoodsFragment;
+import cn.ucai.fulicenter.utils.MFGT;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         fragments[0]=new BoutiqueFragment();
         fragments[1]=new NewGoodsFragment();
         fragments[2]=new CategoryFragment();
+
     }
 
     @OnClick({R.id.rb_boutique, R.id.rb_new_good, R.id.rb_category, R.id.rb_personal_center, R.id.rb_cart})
@@ -66,7 +69,8 @@ public class MainActivity extends AppCompatActivity {
                 index=2;
                 break;
             case R.id.rb_personal_center:
-                index=3;
+              //  index=3;
+                MFGT.gotoLoginActivity(this);
                 break;
             case R.id.rb_cart:
                 index=4;

@@ -23,7 +23,9 @@
         <activity android:name=".activitys.MainActivity" />
         <activity android:name=".activitys.GoodsDetActivity" />
         <activity android:name=".activitys.BoutiqueDetActivity" />
-        <activity android:name=".activitys.Category2Activity"></activity>
+        <activity android:name=".activitys.Category2Activity" />
+        <activity android:name=".activitys.LoginActivity" />
+        <activity android:name=".activitys.RegisterActivity"></activity>
     </application>
 
 </manifest>
