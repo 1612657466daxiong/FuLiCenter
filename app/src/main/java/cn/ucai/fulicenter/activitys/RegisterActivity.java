@@ -1,5 +1,6 @@
 package cn.ucai.fulicenter.activitys;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
@@ -35,7 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
     EditText mComfitpwd;
     @Bind(R.id.btnregister)
     Button btnregister;
-    Context context;
+    Activity context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

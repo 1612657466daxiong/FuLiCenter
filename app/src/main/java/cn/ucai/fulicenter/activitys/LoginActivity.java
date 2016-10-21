@@ -1,5 +1,6 @@
 package cn.ucai.fulicenter.activitys;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -39,8 +40,8 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode==RESULT_OK && requestCode==223){
-            String extra = getIntent().getStringExtra(I.MERCHANT_NAME);
+        if (resultCode== Activity.RESULT_OK && requestCode==223){
+            String extra = data.getStringExtra(I.MERCHANT_NAME);
             loginUser.setText(extra);
         }
     }
