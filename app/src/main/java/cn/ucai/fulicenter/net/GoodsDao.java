@@ -87,5 +87,13 @@ public class GoodsDao {
                 .post()
                 .execute(listener);
     }
+    public static void login(Context context,String name,String password,OkHttpUtils.OnCompleteListener listener){
+        OkHttpUtils<Result> utils = new OkHttpUtils<>(context);
+        utils.url(I.SERVER_ROOT+I.REQUEST_LOGIN)
+                .addParam(I.User.USER_NAME,name)
+                .addParam(I.User.PASSWORD,password)
+                .targetClass(Result.class)
+                .execute(listener);
+    }
 
 }
