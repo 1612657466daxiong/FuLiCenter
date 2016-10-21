@@ -59,7 +59,19 @@ public class MFGT {
         startActivity(context, LoginActivity.class);
     }
     public static void gotoRegister(Activity context){
-        startActivity(context, RegisterActivity.class);
+        Intent intent = new Intent();
+        intent.setClass(context,RegisterActivity.class);
+        startActivityforresult(context,intent,223);
+    }
+    public static void startActivityforresult(Activity context,Intent intent,int requestcode){
+        context.startActivityForResult(intent,requestcode);
+        context.overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
     }
 
+    public static void gotoLoginActivity(Context context,String name){
+        Intent intent = new Intent();
+        intent.setClass(context,LoginActivity.class);
+        intent.putExtra(I.MERCHANT_NAME,name);
+        startActivity(context,intent);
+    }
 }

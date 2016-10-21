@@ -8,6 +8,7 @@ import cn.ucai.fulicenter.bean.CategoryChildBean;
 import cn.ucai.fulicenter.bean.CategoryGroupBean;
 import cn.ucai.fulicenter.bean.GoodsDetailsBean;
 import cn.ucai.fulicenter.bean.NewGoodsBean;
+import cn.ucai.fulicenter.bean.Result;
 
 /**
  * Created by Administrator on 2016/10/17.
@@ -73,6 +74,17 @@ public class GoodsDao {
                 .addParam(I.PAGE_ID,String.valueOf(pageid))
                 .addParam(I.PAGE_SIZE,String.valueOf(I.PAGE_SIZE_DEFAULT))
                 .targetClass(NewGoodsBean[].class)
+                .execute(listener);
+    }
+
+    public static void register(Context context,String username,String nick,String passwrod,OkHttpUtils.OnCompleteListener listener){
+        OkHttpUtils<Result> utils = new OkHttpUtils<>(context);
+        utils.url(I.SERVER_ROOT+I.REQUEST_REGISTER)
+                .addParam(I.User.USER_NAME,username)
+                .addParam(I.User.NICK,nick)
+                .addParam(I.User.PASSWORD,passwrod)
+                .targetClass(Result.class)
+                .post()
                 .execute(listener);
     }
 

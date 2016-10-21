@@ -2,8 +2,24 @@
 <resources>
     <string name="app_name">福利社</string>
     <string name="Version_number_is_wrong">版本号错误</string>
-    <string name="now_refresh">刷新中……</string>
-    <string name="no_more">没有更多数据了……</string>
-    <string name="load_more">加载更多数据……</string>
+    <string name="now_refresh">刷新中…</string>
+    <string name="no_more">没有更多数据了…</string>
+    <string name="load_more">加载更多数据…</string>
+    <string name="user_name">用户名</string>
+    <string name="nickname">昵称</string>
+    <string name="password">密码</string>
+    <string name="confirmpassword">确认密码</string>
+    <string name="register">免费注册</string>
+    <string name="user_name_connot_be_empty">帐号不能为空</string>
+    <string name="illegal_user_name">非法帐号,6-16个数字和字母组合,请以字母开头</string>
+    <string name="nick_name_connot_be_empty">昵称不能为空</string>
+    <string name="password_connot_be_empty">密码不能为空</string>
+    <string name="confirm_password_connot_be_empty">确认密码不能为空</string>
+    <string name="two_input_password">两次输入密码不一致</string>
+    <string name="registering">注册中…</string>
+    <string name="register_fail">注册失败</string>
+    <string name="register_success">注册成功</string>
+    <string name="register_fail_exists">用户名已经存在</string>
+    <string name="login">登录</string>
 </resources>
 
