@@ -83,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
                 index=4;
                 break;
         }
-
         setFragment();
     }
 
@@ -99,5 +98,27 @@ public class MainActivity extends AppCompatActivity {
             ft.show(fragments[index]).commit();
         }
         currIndex=index;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setFragment();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case 111:
+                if (resultCode==101){
+                    index=3;
+                    setFragment();
+                }else {
+                    setFragment();
+                }
+                break;
+
+        }
     }
 }

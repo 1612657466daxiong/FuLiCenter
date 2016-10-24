@@ -100,10 +100,12 @@ public class LoginActivity extends AppCompatActivity {
                         UserDao dao = new UserDao(context);
                         boolean b = dao.saveUser(user);
                         if (b){
-                            CommonUtils.showShortToast("登录成功");
                             FuLiCenterApplication.getInstance().setUser(user);
                             SharePreferenceDao.getInstance(context).saveUser(user.getMuserName());
+                            CommonUtils.showShortToast("登录成功");
                             Log.i("main","数据库存入用户成功");
+                            Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                            setResult(101,intent);
                             finish();
                         }else {
                             CommonUtils.showShortToast(R.string.user_db_exception);
@@ -118,6 +120,9 @@ public class LoginActivity extends AppCompatActivity {
                         CommonUtils.showShortToast("用户名不存在");
                         mloginUser.requestFocus();
                         return;
+                    }else if (result.getRetCode()==I.MSG_UNKNOW || result.getRetCode()==I.MSG_ILLEGAL_REQUEST){
+                        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                        setResult(102,intent);
                     }
                 }
             }

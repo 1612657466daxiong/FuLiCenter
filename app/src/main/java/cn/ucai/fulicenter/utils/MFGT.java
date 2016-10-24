@@ -56,7 +56,8 @@ public class MFGT {
         startActivity(context,intent);
     }
     public static void gotoLoginActivity(Activity context){
-        startActivity(context, LoginActivity.class);
+        Intent intent = new Intent(context,LoginActivity.class);
+        startActivityforresult(context, intent,111);
     }
     public static void gotoRegister(Activity context){
         Intent intent = new Intent(context,RegisterActivity.class);

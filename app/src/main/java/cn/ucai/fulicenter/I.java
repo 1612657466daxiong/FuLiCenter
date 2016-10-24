@@ -245,6 +245,9 @@ public interface I {
         String USER_NAME = "m_avatar_user_name";//用户账号或者群组账号
         String AVATAR_PATH = "m_avatar_path";//保存路径
         String AVATAR_TYPE = "m_avatar_type";//头像类型：\n0:用户头像\n1:群组头像
+        String AVATAR_SUFFIX="m_avatar_suffix";
+        String AVATAR_WIDTH="width";
+        String AVATAR_HEIGTH="height";
     }
 
     /**

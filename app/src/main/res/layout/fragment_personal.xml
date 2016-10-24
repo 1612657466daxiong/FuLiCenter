@@ -43,7 +43,7 @@
             android:layout_weight="1">
 
             <ImageView
-                android:id="@+id/iv_avatar"
+                android:id="@+id/iv_avatartitle"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_alignParentBottom="true"
@@ -57,7 +57,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@id/iv_avatar"
+                android:layout_toRightOf="@id/iv_avatartitle"
                 android:text="a"
                 android:textSize="30dp" />
 
@@ -84,6 +84,7 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
                 <TextView
+                    android:id="@+id/count_goods"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="2"
@@ -108,6 +109,7 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
                 <TextView
+                    android:id="@+id/count_shop"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="2"
@@ -133,6 +135,7 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
                 <TextView
+                    android:id="@+id/count_foot"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="2"

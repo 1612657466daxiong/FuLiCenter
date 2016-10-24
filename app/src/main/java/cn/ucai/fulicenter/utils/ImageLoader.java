@@ -17,6 +17,7 @@ import java.net.URLEncoder;
 
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.net.OkHttpUtils;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -362,5 +363,19 @@ public class ImageLoader {
                 .imageView(imageView)
                 .setDragging(isDragging)
                 .showImage(context);
+    }
+    static final String TYPE_AVATAR_USER="user_avatar";
+    public static void downloadAvatar(Context context,String name_nick,String suffix,ImageView imageView){
+
+        String url= I.SERVER_ROOT+I.REQUEST_DOWNLOAD_AVATAR+"?"+I.NAME_OR_HXID+"="+name_nick+
+                "&"+I.AVATAR_TYPE+"="+TYPE_AVATAR_USER+"&"+I.Avatar.AVATAR_SUFFIX+"="+suffix+"&"+I.Avatar.AVATAR_WIDTH+"="+50
+                +"&"+I.Avatar.AVATAR_HEIGTH+"="+50;
+        Log.i("main",url);
+        ImageLoader.build(url)
+                .defaultPicture(R.drawable.nopic)
+                .imageView(imageView)
+                .setDragging(true)
+                .showImage(context);
+
     }
 }
