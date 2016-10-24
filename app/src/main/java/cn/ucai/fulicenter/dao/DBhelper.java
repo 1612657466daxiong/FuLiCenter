@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import cn.ucai.fulicenter.I;
 
+
 /**
  * Created by Administrator on 2016/10/24.
  */
@@ -17,7 +18,7 @@ public class DBhelper extends SQLiteOpenHelper {
             UserDao.USER_COLUMN_NAME+ " TEXT PRIMARY KEY, " +
             UserDao.USER_COLUMN_NICK+" TEXT, " +
             UserDao.USER_COLUMN_AVATER_ID+" INTEGER, " +
-            UserDao.USER_COLUMN_AVATER_TYPE +"INTEGER, " +
+            UserDao.USER_COLUMN_AVATER_TYPE +" INTEGER, " +
             UserDao.USER_COLUMN_AVATER_PATH+" TEXT," +
             UserDao.USER_COLUMN_AVATER_SUFFIX+" TEXT, " +
             UserDao.USER_COLUMN_AVATER_LASTUPDATE_TIME+" TEXT);";

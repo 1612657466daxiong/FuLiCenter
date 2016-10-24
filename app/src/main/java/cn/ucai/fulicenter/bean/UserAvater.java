@@ -78,4 +78,17 @@ public class UserAvater {
     public void setMavatarLastUpdateTime(String mavatarLastUpdateTime) {
         this.mavatarLastUpdateTime = mavatarLastUpdateTime;
     }
+
+    @Override
+    public String toString() {
+        return "UserAvater{" +
+                "muserName='" + muserName + '\'' +
+                ", muserNick='" + muserNick + '\'' +
+                ", mavatarId=" + mavatarId +
+                ", mavatarPath='" + mavatarPath + '\'' +
+                ", mavatarSuffix='" + mavatarSuffix + '\'' +
+                ", mavatarType=" + mavatarType +
+                ", mavatarLastUpdateTime='" + mavatarLastUpdateTime + '\'' +
+                '}';
+    }
 }

@@ -14,10 +14,12 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.fragments.BoutiqueFragment;
 import cn.ucai.fulicenter.fragments.CategoryFragment;
 import cn.ucai.fulicenter.fragments.NewGoodsFragment;
+import cn.ucai.fulicenter.fragments.PersonalFragment;
 import cn.ucai.fulicenter.utils.MFGT;
 
 public class MainActivity extends AppCompatActivity {
@@ -53,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         fragments[0]=new BoutiqueFragment();
         fragments[1]=new NewGoodsFragment();
         fragments[2]=new CategoryFragment();
+        fragments[3]=new PersonalFragment();
 
     }
 
@@ -70,7 +73,11 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.rb_personal_center:
               //  index=3;
-                MFGT.gotoLoginActivity(this);
+                if (FuLiCenterApplication.getUser()!=null){
+                    index=3;
+                }else {
+                    MFGT.gotoLoginActivity(this);
+                }
                 break;
             case R.id.rb_cart:
                 index=4;

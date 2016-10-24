@@ -9,12 +9,14 @@ import cn.ucai.fulicenter.bean.UserAvater;
  * Created by Administrator on 2016/10/13.
  */
 public class FuLiCenterApplication extends Application {
-    public UserAvater getUser() {
+
+
+    public static UserAvater getUser() {
         return userAvater;
     }
 
-    public void setUser(UserAvater userAvater) {
-        this.userAvater = userAvater;
+    public static void setUser(UserAvater userAvater) {
+        FuLiCenterApplication.userAvater = userAvater;
     }
 
     private static UserAvater userAvater;

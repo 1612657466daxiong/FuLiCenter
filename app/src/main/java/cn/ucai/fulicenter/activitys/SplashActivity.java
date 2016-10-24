@@ -6,8 +6,10 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.UserAvater;
+import cn.ucai.fulicenter.dao.SharePreferenceDao;
 import cn.ucai.fulicenter.dao.UserDao;
 import cn.ucai.fulicenter.utils.MFGT;
 
@@ -44,8 +46,15 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                UserDao dao = new UserDao(context);
-                UserAvater userAvater = dao.getUser("哈哈哈");
+                UserAvater user = FuLiCenterApplication.getUser();
+                String username = SharePreferenceDao.getInstance(context).getUser();
+                if (user==null&&username!=null){
+                    UserDao dao = new UserDao(context);
+                    UserAvater userAvater = dao.getUser(username);
+                    if (userAvater!=null){
+                        FuLiCenterApplication.setUser(userAvater);
+                    }
+                }
                 MFGT.gotoMainActivity(SplashActivity.this);
                 MFGT.finish(SplashActivity.this);
             }

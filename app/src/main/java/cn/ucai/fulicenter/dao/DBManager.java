@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.bean.UserAvater;
@@ -16,9 +17,7 @@ public class DBManager  {
     private DBhelper dbhelper;
 
     void onInit(Context context){
-        if(dbhelper==null){
-            dbhelper=new DBhelper(context);
-        }
+        dbhelper=new DBhelper(context);
     }
 
     public static synchronized DBManager getInstant(){
@@ -41,8 +40,12 @@ public class DBManager  {
         values.put(UserDao.USER_COLUMN_AVATER_PATH,user.getMavatarPath());
         values.put(UserDao.USER_COLUMN_AVATER_SUFFIX,user.getMavatarSuffix());
         values.put(UserDao.USER_COLUMN_AVATER_LASTUPDATE_TIME,user.getMavatarLastUpdateTime());
+
         if (db.isOpen()){
+            Log.i("main","=======================进入DBManager");
+            Log.i("main","boolean"+(db.replace(UserDao.USER_TABLE_NAME,null,values)!=-1));
             return db.replace(UserDao.USER_TABLE_NAME,null,values)!=-1;
+
         }
         return false;
     }

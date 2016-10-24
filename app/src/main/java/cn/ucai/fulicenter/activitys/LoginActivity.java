@@ -23,6 +23,7 @@ import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.Result;
 import cn.ucai.fulicenter.bean.UserAvater;
+import cn.ucai.fulicenter.dao.SharePreferenceDao;
 import cn.ucai.fulicenter.dao.UserDao;
 import cn.ucai.fulicenter.net.GoodsDao;
 import cn.ucai.fulicenter.net.OkHttpUtils;
@@ -95,16 +96,18 @@ public class LoginActivity extends AppCompatActivity {
                         Log.i("main",string);
                         Log.i("main",  result.getRetData().toString());
                         UserAvater user = gson.fromJson(result.getRetData().toString(), UserAvater.class);
-                        CommonUtils.showShortToast("登录成功");
+                        Log.i("main",user.toString());
                         UserDao dao = new UserDao(context);
                         boolean b = dao.saveUser(user);
-                      if (b){
+                        if (b){
+                            CommonUtils.showShortToast("登录成功");
                             FuLiCenterApplication.getInstance().setUser(user);
-                           Log.i("main","数据库存入用户成功");
+                            SharePreferenceDao.getInstance(context).saveUser(user.getMuserName());
+                            Log.i("main","数据库存入用户成功");
+                            finish();
                         }else {
                             CommonUtils.showShortToast(R.string.user_db_exception);
-                           finish();
-                      }
+                        }
                         return;
 
                     }else if (result.getRetCode()==I.MSG_LOGIN_ERROR_PASSWORD){
