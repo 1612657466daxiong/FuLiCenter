@@ -9,6 +9,7 @@ import cn.ucai.fulicenter.bean.CategoryGroupBean;
 import cn.ucai.fulicenter.bean.GoodsDetailsBean;
 import cn.ucai.fulicenter.bean.NewGoodsBean;
 import cn.ucai.fulicenter.bean.Result;
+import cn.ucai.fulicenter.utils.MD5;
 
 /**
  * Created by Administrator on 2016/10/17.
@@ -82,17 +83,17 @@ public class GoodsDao {
         utils.url(I.SERVER_ROOT+I.REQUEST_REGISTER)
                 .addParam(I.User.USER_NAME,username)
                 .addParam(I.User.NICK,nick)
-                .addParam(I.User.PASSWORD,passwrod)
+                .addParam(I.User.PASSWORD,MD5.getMessageDigest(passwrod))
                 .targetClass(Result.class)
                 .post()
                 .execute(listener);
     }
     public static void login(Context context,String name,String password,OkHttpUtils.OnCompleteListener listener){
-        OkHttpUtils<Result> utils = new OkHttpUtils<>(context);
+        OkHttpUtils<String> utils = new OkHttpUtils<>(context);
         utils.url(I.SERVER_ROOT+I.REQUEST_LOGIN)
                 .addParam(I.User.USER_NAME,name)
-                .addParam(I.User.PASSWORD,password)
-                .targetClass(Result.class)
+                .addParam(I.User.PASSWORD,MD5.getMessageDigest(password))
+                .targetClass(String.class)
                 .execute(listener);
     }
 

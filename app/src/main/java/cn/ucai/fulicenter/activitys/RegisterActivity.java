@@ -100,5 +100,6 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
         });
+        pd.dismiss();
     }
 }

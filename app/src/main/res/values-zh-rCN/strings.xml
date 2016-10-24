@@ -21,5 +21,6 @@
     <string name="register_success">注册成功</string>
     <string name="register_fail_exists">用户名已经存在</string>
     <string name="login">登录</string>
+    <string name="user_db_exception">用户数据库异常</string>
 </resources>
 

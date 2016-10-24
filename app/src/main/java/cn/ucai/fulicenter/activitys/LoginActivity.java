@@ -1,6 +1,7 @@
 package cn.ucai.fulicenter.activitys;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,16 +11,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.google.gson.Gson;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.Result;
+import cn.ucai.fulicenter.bean.UserAvater;
+import cn.ucai.fulicenter.dao.UserDao;
 import cn.ucai.fulicenter.net.GoodsDao;
 import cn.ucai.fulicenter.net.OkHttpUtils;
 import cn.ucai.fulicenter.utils.CommonUtils;
+import cn.ucai.fulicenter.utils.ConvertUtils;
 import cn.ucai.fulicenter.utils.MFGT;
+import cn.ucai.fulicenter.utils.ResultUtils;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -33,12 +41,14 @@ public class LoginActivity extends AppCompatActivity {
     Button loginBtnlogin;
     @Bind(R.id.login_btnregister)
     Button loginBtnregister;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        context =this;
     }
 
     @Override
@@ -73,12 +83,24 @@ public class LoginActivity extends AppCompatActivity {
         }
         String name= mloginUser.getText().toString().trim();
         String password=mloginPwd.getText().toString().trim();
-        GoodsDao.login(this, name, password, new OkHttpUtils.OnCompleteListener<Result>() {
+
+        GoodsDao.login(this, name, password, new OkHttpUtils.OnCompleteListener<String>() {
             @Override
-            public void onSuccess(Result result) {
+            public void onSuccess(String string) {
+                Result result = ResultUtils.getResultFromJson(string, Result.class);
                 if (result!=null){
                     if (result.getRetCode()==0){
+                        Gson gson = new Gson();
+                        UserAvater user= gson.fromJson(result.getRetData().toString(), UserAvater.class);
                         CommonUtils.showShortToast("登录成功");
+                        UserDao dao = new UserDao(context);
+                        boolean b = dao.saveUser(user);
+                        if (b){
+                            FuLiCenterApplication.getInstance().setUser(user);
+                        }else {
+                            CommonUtils.showShortToast(R.string.user_db_exception);
+                            finish();
+                        }
                         return;
 
                     }else if (result.getRetCode()==I.MSG_LOGIN_ERROR_PASSWORD){
