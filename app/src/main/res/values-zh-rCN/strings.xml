@@ -25,5 +25,6 @@
     <string name="iscollectsuccess">收藏该商品成功</string>
     <string name="iscollectfail">收藏该商品失败</string>
     <string name="iscollect">该商品已收藏</string>
+    <string name="findcountcollect">获取收藏数量失败</string>
 </resources>
 

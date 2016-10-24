@@ -12,9 +12,14 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.ucai.fulicenter.FuLiCenterApplication;
+import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.activitys.MainActivity;
+import cn.ucai.fulicenter.bean.MessageBean;
 import cn.ucai.fulicenter.bean.UserAvater;
+import cn.ucai.fulicenter.net.GoodsDao;
+import cn.ucai.fulicenter.net.OkHttpUtils;
+import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.ImageLoader;
 
 /**
@@ -57,6 +62,28 @@ public class PersonalFragment extends Fragment {
         UserAvater user = FuLiCenterApplication.getUser();
         ImageLoader.downloadAvatar(context, user.getMuserName(), user.getMavatarSuffix(), ivAvatartitle);
         tvName.setText(user.getMuserName());
+        countGoods.setText(findcountcollect(user.getMuserName())+"");
+    }
+    int countcollcet;
+    private int findcountcollect(String username) {
+        GoodsDao.findcollectCount(context, username, new OkHttpUtils.OnCompleteListener<MessageBean>() {
+            @Override
+            public void onSuccess(MessageBean result) {
+                if (result!=null){
+                    if (result.isSuccess()){
+                        countcollcet=Integer.parseInt(result.getMsg());
+                    }else {
+                        CommonUtils.showShortToast(R.string.findcountcollect);
+                    }
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+                CommonUtils.showShortToast(error);
+            }
+        });
+        return countcollcet;
     }
 
     private void initView() {
