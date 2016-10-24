@@ -15,6 +15,15 @@ public class Result {
     private boolean retMsg;
     private Object retData;
 
+    @Override
+    public String toString() {
+        return "Result{" +
+                "retCode=" + retCode +
+                ", retMsg=" + retMsg +
+                ", retData=" + retData +
+                '}';
+    }
+
     public int getRetCode() {
         return retCode;
     }

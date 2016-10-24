@@ -45,8 +45,11 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 UserDao dao = new UserDao(context);
-                UserAvater userAvater = dao.getUser("...");
+                UserAvater userAvater = dao.getUser("哈哈哈");
+                MFGT.gotoMainActivity(SplashActivity.this);
+                MFGT.finish(SplashActivity.this);
             }
         },SLEEP_TIME);
+
     }
 }

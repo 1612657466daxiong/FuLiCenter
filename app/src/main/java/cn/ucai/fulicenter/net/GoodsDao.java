@@ -83,7 +83,7 @@ public class GoodsDao {
         utils.url(I.SERVER_ROOT+I.REQUEST_REGISTER)
                 .addParam(I.User.USER_NAME,username)
                 .addParam(I.User.NICK,nick)
-                .addParam(I.User.PASSWORD,MD5.getMessageDigest(passwrod))
+                .addParam(I.User.PASSWORD,passwrod)
                 .targetClass(Result.class)
                 .post()
                 .execute(listener);
@@ -92,7 +92,7 @@ public class GoodsDao {
         OkHttpUtils<String> utils = new OkHttpUtils<>(context);
         utils.url(I.SERVER_ROOT+I.REQUEST_LOGIN)
                 .addParam(I.User.USER_NAME,name)
-                .addParam(I.User.PASSWORD,MD5.getMessageDigest(password))
+                .addParam(I.User.PASSWORD,password)
                 .targetClass(String.class)
                 .execute(listener);
     }

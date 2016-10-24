@@ -12,11 +12,13 @@ import cn.ucai.fulicenter.bean.UserAvater;
  * Created by Administrator on 2016/10/24.
  */
 public class DBManager  {
-    private static DBManager dbmgr;
+    private static DBManager dbmgr=new DBManager();
     private DBhelper dbhelper;
 
     void onInit(Context context){
-       dbhelper=new DBhelper(context);
+        if(dbhelper==null){
+            dbhelper=new DBhelper(context);
+        }
     }
 
     public static synchronized DBManager getInstant(){

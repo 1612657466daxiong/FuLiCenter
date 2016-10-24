@@ -11,11 +11,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+
 import com.google.gson.Gson;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
 import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
@@ -25,7 +27,6 @@ import cn.ucai.fulicenter.dao.UserDao;
 import cn.ucai.fulicenter.net.GoodsDao;
 import cn.ucai.fulicenter.net.OkHttpUtils;
 import cn.ucai.fulicenter.utils.CommonUtils;
-import cn.ucai.fulicenter.utils.ConvertUtils;
 import cn.ucai.fulicenter.utils.MFGT;
 import cn.ucai.fulicenter.utils.ResultUtils;
 
@@ -87,20 +88,23 @@ public class LoginActivity extends AppCompatActivity {
         GoodsDao.login(this, name, password, new OkHttpUtils.OnCompleteListener<String>() {
             @Override
             public void onSuccess(String string) {
-                Result result = ResultUtils.getResultFromJson(string, Result.class);
+                Gson gson = new Gson();
+                Result result = gson.fromJson(string, Result.class);
                 if (result!=null){
-                    if (result.getRetCode()==0){
-                        Gson gson = new Gson();
-                        UserAvater user= gson.fromJson(result.getRetData().toString(), UserAvater.class);
+                    if (result.isRetMsg()){
+                        Log.i("main",string);
+                        Log.i("main",  result.getRetData().toString());
+                        UserAvater user = gson.fromJson(result.getRetData().toString(), UserAvater.class);
                         CommonUtils.showShortToast("登录成功");
                         UserDao dao = new UserDao(context);
                         boolean b = dao.saveUser(user);
-                        if (b){
+                      if (b){
                             FuLiCenterApplication.getInstance().setUser(user);
+                           Log.i("main","数据库存入用户成功");
                         }else {
                             CommonUtils.showShortToast(R.string.user_db_exception);
-                            finish();
-                        }
+                           finish();
+                      }
                         return;
 
                     }else if (result.getRetCode()==I.MSG_LOGIN_ERROR_PASSWORD){
