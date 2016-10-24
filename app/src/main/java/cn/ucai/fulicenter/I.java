@@ -227,6 +227,7 @@ public interface I {
         String PASSWORD = "m_user_password";//用户密码
         String NICK = "m_user_nick";//用户昵称
         String UN_READ_MSG_COUNT = "m_user_unread_msg_count";//未读消息数量
+        String USER_NAME_ISCOLLECT="userName";
     }
 
     interface Contact {

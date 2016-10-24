@@ -38,7 +38,7 @@
         android:id="@+id/id_ivcollect"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:src="@mipmap/bg_collect_out"
+        android:src="@drawable/selector_collect_title"
         android:layout_toLeftOf="@id/id_ivshare"
         android:layout_marginRight="15dp"
         android:layout_centerVertical="true"/>
@@ -46,7 +46,7 @@
         android:id="@+id/id_iv_det_car"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:src="@mipmap/bg_cart_selected"
+        android:src="@drawable/selector_car_title"
         android:layout_toLeftOf="@id/id_ivcollect"
         android:layout_marginRight="15dp"
         android:layout_centerVertical="true"/>

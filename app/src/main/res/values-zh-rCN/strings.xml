@@ -22,5 +22,8 @@
     <string name="register_fail_exists">用户名已经存在</string>
     <string name="login">登录</string>
     <string name="user_db_exception">用户数据库异常</string>
+    <string name="iscollectsuccess">收藏该商品成功</string>
+    <string name="iscollectfail">收藏该商品失败</string>
+    <string name="iscollect">该商品已收藏</string>
 </resources>
 

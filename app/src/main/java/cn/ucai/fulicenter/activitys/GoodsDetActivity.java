@@ -1,5 +1,6 @@
 package cn.ucai.fulicenter.activitys;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -10,12 +11,15 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.AlbumsBean;
 import cn.ucai.fulicenter.bean.GoodsDetailsBean;
+import cn.ucai.fulicenter.bean.MessageBean;
 import cn.ucai.fulicenter.net.GoodsDao;
 import cn.ucai.fulicenter.net.OkHttpUtils;
+import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.MFGT;
 import cn.ucai.fulicenter.views.FlowIndicator;
 import cn.ucai.fulicenter.views.SlideAutoLoopView;
@@ -48,6 +52,9 @@ public class GoodsDetActivity extends AppCompatActivity {
     @Bind(R.id.wv_details)
     WebView mwvDetails;
 
+    Context context;
+    boolean flag;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +62,7 @@ public class GoodsDetActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         goodsid = getIntent().getIntExtra(I.GoodsDetails.KEY_GOODS_ID, 0);
         initData();
+        context=this;
     }
 
     private void initData() {
@@ -103,14 +111,73 @@ public class GoodsDetActivity extends AppCompatActivity {
     }
 
 
-    @OnClick(R.id.id_ivback)
+    @OnClick({R.id.id_ivback,R.id.id_ivcollect})
     public void onClick(View view) {
-
+        switch (view.getId()){
+            case R.id.id_ivback:
+                finish();
+                break;
+            case R.id.id_ivcollect:
+               if (iscollect()){
+                   CommonUtils.showShortToast(R.string.iscollect);
+               }else {
+                   addgoodsincollect();
+               }
+                break;
+        }
     }
+
+    private void addgoodsincollect() {
+        GoodsDao.addCollect(context, FuLiCenterApplication.getUser().getMuserName(),
+                details.getGoodsId(), new OkHttpUtils.OnCompleteListener<MessageBean>() {
+            @Override
+            public void onSuccess(MessageBean result) {
+                if (result!=null){
+                    if (result.isSuccess()){
+                        CommonUtils.showShortToast(R.string.iscollectsuccess);
+                    }else {
+                        CommonUtils.showShortToast(R.string.iscollectfail);
+                    }
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+                CommonUtils.showShortToast(error);
+            }
+        });
+    }
+
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         MFGT.finish(this);
+    }
+
+    public boolean iscollect() {
+        GoodsDao.isCollect(context, FuLiCenterApplication.getUser().getMuserName(),
+                details.getGoodsId(), new OkHttpUtils.OnCompleteListener<MessageBean>() {
+                    boolean  iscollect;
+                    @Override
+                    public void onSuccess(MessageBean result) {
+                        if (result!=null){
+                            if (result.isSuccess()){
+                                flag=true;
+                            }else {
+                                flag=false;
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        CommonUtils.showShortToast(error);
+                        flag=false;
+                    }
+
+                });
+        return flag;
+
     }
 }

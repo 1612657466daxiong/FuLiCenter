@@ -7,6 +7,7 @@ import cn.ucai.fulicenter.bean.BoutiqueBean;
 import cn.ucai.fulicenter.bean.CategoryChildBean;
 import cn.ucai.fulicenter.bean.CategoryGroupBean;
 import cn.ucai.fulicenter.bean.GoodsDetailsBean;
+import cn.ucai.fulicenter.bean.MessageBean;
 import cn.ucai.fulicenter.bean.NewGoodsBean;
 import cn.ucai.fulicenter.bean.Result;
 import cn.ucai.fulicenter.utils.MD5;
@@ -94,6 +95,23 @@ public class GoodsDao {
                 .addParam(I.User.USER_NAME,name)
                 .addParam(I.User.PASSWORD,password)
                 .targetClass(String.class)
+                .execute(listener);
+    }
+
+    public static void addCollect(Context context,String username,int goodsid,OkHttpUtils.OnCompleteListener listener){
+        OkHttpUtils<MessageBean> utils = new OkHttpUtils<>(context);
+        utils.url(I.SERVER_ROOT+I.REQUEST_ADD_COLLECT)
+                .addParam(I.Goods.KEY_GOODS_ID,String.valueOf(goodsid))
+                .addParam(I.User.USER_NAME_ISCOLLECT,username)
+                .targetClass(MessageBean.class)
+                .execute(listener);
+    }
+    public static void isCollect(Context context,String username,int goodsid,OkHttpUtils.OnCompleteListener listener){
+        OkHttpUtils<MessageBean> utils = new OkHttpUtils<>(context);
+        utils.url(I.SERVER_ROOT+I.REQUEST_IS_COLLECT)
+                .addParam(I.Goods.KEY_GOODS_ID,String.valueOf(goodsid))
+                .addParam(I.User.USER_NAME_ISCOLLECT,username)
+                .targetClass(MessageBean.class)
                 .execute(listener);
     }
 
