@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="67dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="10dp"
+    app:cardBackgroundColor="@color/white"
+    android:layout_margin="@dimen/cardview_default_elevation"
+    android:layout_weight="1"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="67dp"
+        android:background="@drawable/divid_explist_group"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+<ImageView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:src="@drawable/center_card_coupon2"/>
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:id="@+id/tv_group_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="网店卷"
+            android:textSize="20sp" />
+
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="暂无可用优惠卷"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/iv_indicator"
+            android:layout_width="20dp"
+            android:layout_height="60dp"
+            android:src="@drawable/right_arrow_icon" />
+    </LinearLayout>
+</android.support.v7.widget.CardView>
