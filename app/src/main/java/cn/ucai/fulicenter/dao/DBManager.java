@@ -63,7 +63,17 @@ public class DBManager  {
         }
         return user;
     }
-
+    public synchronized boolean updateUser(UserAvater uesr){
+        int reult = -1;
+        SQLiteDatabase db =dbhelper.getWritableDatabase();
+        String sql =UserDao.USER_TABLE_NAME+"=?";
+        ContentValues cv =new ContentValues();
+        cv.put(UserDao.USER_COLUMN_NICK,uesr.getMuserNick());
+        if (db.isOpen()){
+            reult=db.update(UserDao.USER_TABLE_NAME,cv,sql,new String[]{uesr.getMuserName()});
+        }
+        return reult>0;
+    }
 
 
 

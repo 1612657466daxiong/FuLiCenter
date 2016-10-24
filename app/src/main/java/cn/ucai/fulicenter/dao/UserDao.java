@@ -27,4 +27,7 @@ public class UserDao {
     public UserAvater getUser(String  username){
         return DBManager.getInstant().getUser(username);
     }
+    public boolean updateUser(UserAvater user){
+        return DBManager.getInstant().updateUser(user);
+    }
 }
