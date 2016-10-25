@@ -13,6 +13,7 @@ import cn.ucai.fulicenter.activitys.GoodsDetActivity;
 import cn.ucai.fulicenter.activitys.LoginActivity;
 import cn.ucai.fulicenter.activitys.MainActivity;
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.activitys.PersonInfoActivity;
 import cn.ucai.fulicenter.activitys.RegisterActivity;
 import cn.ucai.fulicenter.bean.CategoryChildBean;
 
@@ -72,5 +73,10 @@ public class MFGT {
         Intent intent = new Intent(context,LoginActivity.class);
         intent.putExtra(I.MERCHANT_NAME,name);
         context.setResult(Activity.RESULT_OK,intent);
+    }
+
+    public static void gotoPersonInfoActivity(Activity activity){
+        Intent intent = new Intent(activity, PersonInfoActivity.class);
+        startActivity(activity,intent);
     }
 }

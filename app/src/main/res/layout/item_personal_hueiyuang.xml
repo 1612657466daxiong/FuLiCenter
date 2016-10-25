@@ -39,7 +39,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="一卡在手，逛店无忧"
+            android:text="一卡在手，保健无忧"
             android:textSize="20sp" />
 
         <ImageView

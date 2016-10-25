@@ -53,7 +53,6 @@ public class GoodsDetActivity extends AppCompatActivity {
     WebView mwvDetails;
 
     Context context;
-    boolean flag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,11 +117,7 @@ public class GoodsDetActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.id_ivcollect:
-               if (iscollect()){
-                   CommonUtils.showShortToast(R.string.iscollect);
-               }else {
-                   addgoodsincollect();
-               }
+                iscollect();
                 break;
         }
     }
@@ -155,17 +150,17 @@ public class GoodsDetActivity extends AppCompatActivity {
         MFGT.finish(this);
     }
 
-    public boolean iscollect() {
+    public void iscollect() {
         GoodsDao.isCollect(context, FuLiCenterApplication.getUser().getMuserName(),
                 details.getGoodsId(), new OkHttpUtils.OnCompleteListener<MessageBean>() {
-                    boolean  iscollect;
+
                     @Override
                     public void onSuccess(MessageBean result) {
                         if (result!=null){
                             if (result.isSuccess()){
-                                flag=true;
+                                CommonUtils.showShortToast(R.string.iscollect);
                             }else {
-                                flag=false;
+                             addgoodsincollect();
                             }
                         }
                     }
@@ -173,11 +168,10 @@ public class GoodsDetActivity extends AppCompatActivity {
                     @Override
                     public void onError(String error) {
                         CommonUtils.showShortToast(error);
-                        flag=false;
                     }
 
                 });
-        return flag;
+
 
     }
 }

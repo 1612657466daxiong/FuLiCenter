@@ -1,6 +1,7 @@
 package cn.ucai.fulicenter.fragments;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,8 +12,8 @@ import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.ucai.fulicenter.FuLiCenterApplication;
-import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.activitys.MainActivity;
 import cn.ucai.fulicenter.bean.MessageBean;
@@ -21,6 +22,7 @@ import cn.ucai.fulicenter.net.GoodsDao;
 import cn.ucai.fulicenter.net.OkHttpUtils;
 import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.ImageLoader;
+import cn.ucai.fulicenter.utils.MFGT;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,9 +38,12 @@ public class PersonalFragment extends Fragment {
     TextView countShop;
     @Bind(R.id.count_foot)
     TextView countFoot;
-    MainActivity context;
     @Bind(R.id.iv_avatartitle)
     ImageView ivAvatartitle;
+    @Bind(R.id.tv_set)
+    TextView mtvSet;
+
+    MainActivity context;
 
     public PersonalFragment() {
         // Required empty public constructor
@@ -62,17 +67,19 @@ public class PersonalFragment extends Fragment {
         UserAvater user = FuLiCenterApplication.getUser();
         ImageLoader.downloadAvatar(context, user.getMuserName(), user.getMavatarSuffix(), ivAvatartitle);
         tvName.setText(user.getMuserName());
-        countGoods.setText(findcountcollect(user.getMuserName())+"");
+        countGoods.setText(findcountcollect(user.getMuserName()) + "");
     }
+
     int countcollcet;
+
     private int findcountcollect(String username) {
         GoodsDao.findcollectCount(context, username, new OkHttpUtils.OnCompleteListener<MessageBean>() {
             @Override
             public void onSuccess(MessageBean result) {
-                if (result!=null){
-                    if (result.isSuccess()){
-                        countcollcet=Integer.parseInt(result.getMsg());
-                    }else {
+                if (result != null) {
+                    if (result.isSuccess()) {
+                        countcollcet = Integer.parseInt(result.getMsg());
+                    } else {
                         CommonUtils.showShortToast(R.string.findcountcollect);
                     }
                 }
@@ -90,9 +97,20 @@ public class PersonalFragment extends Fragment {
 
     }
 
+    @OnClick({R.id.tv_set})
+    public void onClick(View view){
+        switch (view.getId()){
+            case R.id.tv_set:
+                MFGT.gotoPersonInfoActivity(context);
+                break;
+        }
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
+
+
 }
