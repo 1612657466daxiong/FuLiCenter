@@ -116,16 +116,16 @@
     </RelativeLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="3">
+        android:layout_height="match_parent"
+        android:layout_weight="1">
     </View>
     <Button
         android:id="@+id/btn_logout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:background="@color/main_orange"
         android:text="退出登录"
+        android:padding="10dp"
         android:textSize="25sp"
         android:textColor="@color/white"
         android:layout_margin="5dp"

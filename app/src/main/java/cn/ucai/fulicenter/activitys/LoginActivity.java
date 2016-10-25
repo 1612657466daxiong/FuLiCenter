@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick({R.id.login_btnregister,R.id.login_btnlogin})
+    @OnClick({R.id.login_btnregister,R.id.login_btnlogin,R.id.login_backpress})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.login_btnregister:
@@ -70,6 +70,9 @@ public class LoginActivity extends AppCompatActivity {
                 break;
             case R.id.login_btnlogin:
                 login();
+            case R.id.login_backpress:
+                finish();
+                break;
         }
     }
 
@@ -93,10 +96,8 @@ public class LoginActivity extends AppCompatActivity {
                 Result result = gson.fromJson(string, Result.class);
                 if (result!=null){
                     if (result.isRetMsg()){
-                        Log.i("main",string);
                         Log.i("main",  result.getRetData().toString());
                         UserAvater user = gson.fromJson(result.getRetData().toString(), UserAvater.class);
-                        Log.i("main",user.toString());
                         UserDao dao = new UserDao(context);
                         boolean b = dao.saveUser(user);
                         if (b){

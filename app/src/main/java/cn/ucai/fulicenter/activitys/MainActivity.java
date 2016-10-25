@@ -56,9 +56,8 @@ public class MainActivity extends AppCompatActivity {
         fragments[1]=new NewGoodsFragment();
         fragments[2]=new CategoryFragment();
         fragments[3]=new PersonalFragment();
-        if (FuLiCenterApplication.getUser()==null){
-            index=1;
-        }
+
+
 
     }
 
@@ -98,14 +97,19 @@ public class MainActivity extends AppCompatActivity {
             if (!fragments[index].isAdded()){
                 ft.add(R.id.fragment_stay,fragments[index]);
             }
-            ft.show(fragments[index]).commit();
+            ft.show(fragments[index]).commitAllowingStateLoss();
         }
+
         currIndex=index;
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        if (FuLiCenterApplication.getUser()==null){
+            index=1;
+            rbNewGood.setChecked(true);
+        }
         setFragment();
     }
 

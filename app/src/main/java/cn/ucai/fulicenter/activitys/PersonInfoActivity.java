@@ -86,7 +86,7 @@ public class PersonInfoActivity extends AppCompatActivity {
             case R.id.btn_logout:
                 SharePreferenceDao.getInstance(context).removeUser();
                 FuLiCenterApplication.setUser(null);
-                MFGT.gotoMainActivity((PersonInfoActivity) context);
+                finish();
                 break;
         }
     }
