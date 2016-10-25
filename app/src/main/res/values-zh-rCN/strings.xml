@@ -27,5 +27,6 @@
     <string name="iscollect">该商品已收藏</string>
     <string name="findcountcollect">获取收藏数量失败</string>
     <string name="uneditable_username">不允许修改用户名</string>
+    <string name="updateavatarsuccess">修改头像成功</string>
 </resources>
 

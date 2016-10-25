@@ -1,5 +1,6 @@
 package cn.ucai.fulicenter.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Environment;
 
@@ -30,5 +31,9 @@ public class FileUtils {
 		dir=getDir(context, newImgName);
 		File newFile=new File(dir);
 		oldFile.renameTo(newFile);
+	}
+
+	public static File getAvatarPath(Activity mActivity, String mAvatarType, String s) {
+		return null;
 	}
 }

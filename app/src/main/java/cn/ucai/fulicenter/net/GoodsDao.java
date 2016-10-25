@@ -1,6 +1,10 @@
 package cn.ucai.fulicenter.net;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+
+import java.io.File;
+import java.lang.reflect.Array;
 
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.bean.BoutiqueBean;
@@ -129,6 +133,17 @@ public class GoodsDao {
                 .addParam(I.User.USER_NAME,username)
                 .addParam(I.User.NICK,nick)
                 .targetClass(Result.class)
+                .execute(listener);
+    }
+
+    public static void updateavatar(Context context, String name,  File file, OkHttpUtils.OnCompleteListener listener){
+        OkHttpUtils<Result> utils = new OkHttpUtils<>(context);
+        utils.url(I.SERVER_ROOT+I.REQUEST_UPDATE_AVATAR)
+                .addParam(I.NAME_OR_HXID,name)
+                .addParam(I.AVATAR_TYPE,I.AVATAR_TYPE_USER_PATH)
+                .addFile2(file)
+                .targetClass(Result.class)
+                .post()
                 .execute(listener);
     }
 

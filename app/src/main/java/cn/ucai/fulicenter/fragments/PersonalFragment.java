@@ -112,5 +112,9 @@ public class PersonalFragment extends Fragment {
         ButterKnife.unbind(this);
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        initData();
+    }
 }

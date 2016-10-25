@@ -1,17 +1,29 @@
 package cn.ucai.fulicenter.activitys;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -24,6 +36,7 @@ import cn.ucai.fulicenter.dao.SharePreferenceDao;
 import cn.ucai.fulicenter.dao.UserDao;
 import cn.ucai.fulicenter.net.GoodsDao;
 import cn.ucai.fulicenter.net.OkHttpUtils;
+import cn.ucai.fulicenter.utils.BitmapUtils;
 import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.ImageLoader;
 import cn.ucai.fulicenter.utils.MFGT;
@@ -50,7 +63,7 @@ public class PersonInfoActivity extends AppCompatActivity {
     Context context;
 
     AlertDialog pd;
-
+    String username = FuLiCenterApplication.getUser().getMuserName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +89,7 @@ public class PersonInfoActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.right_to_avatar:
+                updateAvatar();
                 break;
             case R.id.right_to_name:
                 CommonUtils.showShortToast(R.string.uneditable_username);
@@ -90,6 +104,49 @@ public class PersonInfoActivity extends AppCompatActivity {
                 break;
         }
     }
+    static final int AVATAR_TYPE=10001;
+    private void updateAvatar() {
+        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setType("image/*");
+        startActivityForResult(intent,AVATAR_TYPE);
+    }
+
+    @Override
+    protected void onActivityResult(final int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case AVATAR_TYPE:
+                if (resultCode==RESULT_OK){
+                    Uri uri = data.getData();
+                    ContentResolver resolver = getContentResolver();
+                    String  file = resolver.getType(uri);
+                    if (file.startsWith("image")){
+                        Cursor cursor = resolver.query(uri, new String[]{MediaStore.Images.Media.DATA}, null, null, null);
+                        cursor.moveToFirst();
+                        String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+                        File filein = new File(path);
+                        Log.i("main",filein.toString());
+
+                        final Bitmap bitmap = BitmapFactory.decodeFile(path);
+                        GoodsDao.updateavatar(context, username, filein, new OkHttpUtils.OnCompleteListener<Result>() {
+                            @Override
+                            public void onSuccess(Result result) {
+                                if(result.isRetMsg()){
+                                    CommonUtils.showShortToast(R.string.updateavatarsuccess);
+                                    ivPersonalAvatar.setImageBitmap(bitmap);
+                                }
+                            }
+
+                            @Override
+                            public void onError(String error) {
+
+                            }
+                        });
+                    }
+                }
+                break;
+        }
+    }
 
     private void showdialog() {
         final View layout = View.inflate(context, R.layout.update_personnal_info, null);
@@ -101,6 +158,10 @@ public class PersonInfoActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         EditText text = (EditText) layout.findViewById(R.id.tv_update);
+                        if (text.getText()==null){
+                            CommonUtils.showShortToast(R.string.nick_name_connot_be_empty);
+                            return;
+                        }
                         String nick = text.getText().toString();
                         UserAvater user = FuLiCenterApplication.getUser();
                         user.setMuserNick(nick);
