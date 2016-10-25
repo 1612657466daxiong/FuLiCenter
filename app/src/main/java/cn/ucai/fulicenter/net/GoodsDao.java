@@ -118,7 +118,7 @@ public class GoodsDao {
     public static void findcollectCount(Context context,String username,OkHttpUtils.OnCompleteListener listener){
         OkHttpUtils<MessageBean> utils = new OkHttpUtils<>(context);
         utils.url(I.SERVER_ROOT+I.REQUEST_FIND_COLLECT_COUNT)
-                .addParam(I.User.USER_NAME_ISCOLLECT,username)
+                .addParam(I.Collect.USER_NAME,username)
                 .targetClass(MessageBean.class)
                 .execute(listener);
     }

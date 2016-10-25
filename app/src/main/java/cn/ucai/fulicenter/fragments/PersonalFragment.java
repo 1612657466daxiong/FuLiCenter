@@ -67,18 +67,19 @@ public class PersonalFragment extends Fragment {
         UserAvater user = FuLiCenterApplication.getUser();
         ImageLoader.downloadAvatar(context, user.getMuserName(), user.getMavatarSuffix(), ivAvatartitle);
         tvName.setText(user.getMuserName());
-        countGoods.setText(findcountcollect(user.getMuserName()) + "");
+        findcountcollect(user.getMuserName());
     }
 
-    int countcollcet;
 
-    private int findcountcollect(String username) {
+
+    private void findcountcollect(String username) {
         GoodsDao.findcollectCount(context, username, new OkHttpUtils.OnCompleteListener<MessageBean>() {
             @Override
             public void onSuccess(MessageBean result) {
                 if (result != null) {
                     if (result.isSuccess()) {
-                        countcollcet = Integer.parseInt(result.getMsg());
+
+                        countGoods.setText(result.getMsg());
                     } else {
                         CommonUtils.showShortToast(R.string.findcountcollect);
                     }
@@ -90,7 +91,6 @@ public class PersonalFragment extends Fragment {
                 CommonUtils.showShortToast(error);
             }
         });
-        return countcollcet;
     }
 
     private void initView() {
