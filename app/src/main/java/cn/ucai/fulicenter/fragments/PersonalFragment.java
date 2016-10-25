@@ -4,6 +4,7 @@ package cn.ucai.fulicenter.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,6 +67,7 @@ public class PersonalFragment extends Fragment {
     private void initData() {
         UserAvater user = FuLiCenterApplication.getUser();
         ImageLoader.downloadAvatar(context, user.getMuserName(), user.getMavatarSuffix(), ivAvatartitle);
+        Log.i("main","----------------更改个人中心头像----------------------");
         tvName.setText(user.getMuserName());
         findcountcollect(user.getMuserName());
     }
@@ -117,4 +119,5 @@ public class PersonalFragment extends Fragment {
         super.onResume();
         initData();
     }
+
 }

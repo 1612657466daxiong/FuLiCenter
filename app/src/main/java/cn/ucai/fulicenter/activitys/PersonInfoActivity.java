@@ -9,7 +9,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -117,13 +119,13 @@ public class PersonInfoActivity extends AppCompatActivity {
         switch (requestCode){
             case AVATAR_TYPE:
                 if (resultCode==RESULT_OK){
-                    Uri uri = data.getData();
+                    final Uri uri = data.getData();
                     ContentResolver resolver = getContentResolver();
                     String  file = resolver.getType(uri);
                     if (file.startsWith("image")){
-                        Cursor cursor = resolver.query(uri, new String[]{MediaStore.Images.Media.DATA}, null, null, null);
+                        final Cursor cursor = resolver.query(uri, new String[]{MediaStore.Images.Media.DATA}, null, null, null);
                         cursor.moveToFirst();
-                        String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+                        final String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
                         File filein = new File(path);
                         Log.i("main",filein.toString());
 
@@ -132,8 +134,20 @@ public class PersonInfoActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(Result result) {
                                 if(result.isRetMsg()){
-                                    CommonUtils.showShortToast(R.string.updateavatarsuccess);
+
                                     ivPersonalAvatar.setImageBitmap(bitmap);
+                                    UserDao dao = new UserDao(context);
+                                    UserAvater user = FuLiCenterApplication.getUser();
+                                    user.setMavatarLastUpdateTime(SystemClock.currentThreadTimeMillis()+"");
+                                    user.setMavatarPath(path);
+                                    user.setMavatarSuffix(path.substring(path.length()-4));
+                                    FuLiCenterApplication.setUser(user);
+                                    boolean b = dao.updateUser(user);
+                                    if (b){
+                                        CommonUtils.showShortToast(R.string.updateavatarsuccess);
+                                    }else {
+                                        CommonUtils.showShortToast("图片修异常");
+                                    }
                                 }
                             }
 
