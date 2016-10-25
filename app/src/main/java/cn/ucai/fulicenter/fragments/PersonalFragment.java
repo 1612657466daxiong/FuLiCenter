@@ -55,9 +55,9 @@ public class PersonalFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View layout = inflater.inflate(R.layout.fragment_personal, container, false);
+        ButterKnife.bind(this, layout);
         context = (MainActivity) getContext();
         view = layout;
-        ButterKnife.bind(this, layout);
         initView();
         initData();
         return layout;

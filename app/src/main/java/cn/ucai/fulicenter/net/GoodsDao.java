@@ -123,4 +123,13 @@ public class GoodsDao {
                 .execute(listener);
     }
 
+    public static void  updatenick(Context context,String username,String nick,OkHttpUtils.OnCompleteListener listener){
+        OkHttpUtils<Result> utils = new OkHttpUtils<>(context);
+        utils.url(I.SERVER_ROOT+I.REQUEST_UPDATE_USER_NICK)
+                .addParam(I.User.USER_NAME,username)
+                .addParam(I.User.NICK,nick)
+                .targetClass(Result.class)
+                .execute(listener);
+    }
+
 }
