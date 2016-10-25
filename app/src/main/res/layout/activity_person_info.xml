@@ -12,6 +12,7 @@
     android:layout_height="50dp"
     android:background="@color/white">
     <ImageView
+        android:id="@+id/iv_personinfo_back"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:src="@drawable/back"/>
@@ -36,6 +37,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"/>
         <ImageView
+            android:id="@+id/iv_personal_avatar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/nopic"
@@ -64,6 +66,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"/>
         <TextView
+            android:id="@+id/tv_personalinfo_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="用户名"
@@ -94,6 +97,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"/>
         <TextView
+            android:id="@+id/tv_personalinfo_nick"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="昵称"
@@ -116,6 +120,7 @@
         android:layout_weight="3">
     </View>
     <Button
+        android:id="@+id/btn_logout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

@@ -56,6 +56,9 @@ public class MainActivity extends AppCompatActivity {
         fragments[1]=new NewGoodsFragment();
         fragments[2]=new CategoryFragment();
         fragments[3]=new PersonalFragment();
+        if (FuLiCenterApplication.getUser()==null){
+            index=1;
+        }
 
     }
 

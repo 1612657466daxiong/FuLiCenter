@@ -30,4 +30,5 @@ public class UserDao {
     public boolean updateUser(UserAvater user){
         return DBManager.getInstant().updateUser(user);
     }
+
 }
