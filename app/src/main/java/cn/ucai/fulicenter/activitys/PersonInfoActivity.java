@@ -23,6 +23,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -31,6 +33,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.ucai.fulicenter.FuLiCenterApplication;
+import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.Result;
 import cn.ucai.fulicenter.bean.UserAvater;
@@ -41,7 +44,9 @@ import cn.ucai.fulicenter.net.OkHttpUtils;
 import cn.ucai.fulicenter.utils.BitmapUtils;
 import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.ImageLoader;
+import cn.ucai.fulicenter.utils.L;
 import cn.ucai.fulicenter.utils.MFGT;
+import cn.ucai.fulicenter.utils.OnSetAvatarListener;
 
 public class PersonInfoActivity extends AppCompatActivity {
 
@@ -62,10 +67,11 @@ public class PersonInfoActivity extends AppCompatActivity {
     TextView tvPersonalinfoName;
     @Bind(R.id.tv_personalinfo_nick)
     TextView tvPersonalinfoNick;
-    Context context;
+    PersonInfoActivity context;
+    OnSetAvatarListener msetAvatarListener;
 
     AlertDialog pd;
-    String username = FuLiCenterApplication.getUser().getMuserName();
+    UserAvater user = FuLiCenterApplication.getUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,9 +83,9 @@ public class PersonInfoActivity extends AppCompatActivity {
     }
 
     private void initData() {
-        UserDao dao = new UserDao(context);
         UserAvater user = FuLiCenterApplication.getUser();
-        ImageLoader.downloadAvatar(context, user.getMuserName(), user.getMavatarSuffix(), ivPersonalAvatar);
+        L.e("个人信息初始化user1path = "+user.getMavatarPath());
+        ImageLoader.downloadAvatar(ImageLoader.getAvatar(user),context, ivPersonalAvatar);
         tvPersonalinfoName.setText(user.getMuserName());
         tvPersonalinfoNick.setText(user.getMuserNick());
     }
@@ -88,10 +94,12 @@ public class PersonInfoActivity extends AppCompatActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_personinfo_back:
-                finish();
+                context.finish();
                 break;
             case R.id.right_to_avatar:
-                updateAvatar();
+               //自己实现的上传头像的方法 updateAvatar();
+                msetAvatarListener = new OnSetAvatarListener((PersonInfoActivity)context,
+                        R.id.layout_personalinfo,user.getMuserName(), I.AVATAR_TYPE_USER_PATH);
                 break;
             case R.id.right_to_name:
                 CommonUtils.showShortToast(R.string.uneditable_username);
@@ -106,61 +114,102 @@ public class PersonInfoActivity extends AppCompatActivity {
                 break;
         }
     }
-    static final int AVATAR_TYPE=10001;
-    private void updateAvatar() {
-        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        intent.setType("image/*");
-        startActivityForResult(intent,AVATAR_TYPE);
-    }
 
     @Override
-    protected void onActivityResult(final int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode){
-            case AVATAR_TYPE:
-                if (resultCode==RESULT_OK){
-                    final Uri uri = data.getData();
-                    ContentResolver resolver = getContentResolver();
-                    String  file = resolver.getType(uri);
-                    if (file.startsWith("image")){
-                        final Cursor cursor = resolver.query(uri, new String[]{MediaStore.Images.Media.DATA}, null, null, null);
-                        cursor.moveToFirst();
-                        final String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
-                        File filein = new File(path);
-                        Log.i("main",filein.toString());
-
-                        final Bitmap bitmap = BitmapFactory.decodeFile(path);
-                        GoodsDao.updateavatar(context, username, filein, new OkHttpUtils.OnCompleteListener<Result>() {
-                            @Override
-                            public void onSuccess(Result result) {
-                                if(result.isRetMsg()){
-
-                                    ivPersonalAvatar.setImageBitmap(bitmap);
-                                    UserDao dao = new UserDao(context);
-                                    UserAvater user = FuLiCenterApplication.getUser();
-                                   // user.setMavatarLastUpdateTime(SystemClock.currentThreadTimeMillis());
-                                    user.setMavatarPath(path);
-                                    user.setMavatarSuffix(path.substring(path.length()-4));
-                                    FuLiCenterApplication.setUser(user);
-                                    boolean b = dao.updateUser(user);
-                                    if (b){
-                                        CommonUtils.showShortToast(R.string.updateavatarsuccess);
-                                    }else {
-                                        CommonUtils.showShortToast("图片修异常");
-                                    }
-                                }
-                            }
-
-                            @Override
-                            public void onError(String error) {
-
-                            }
-                        });
-                    }
-                }
-                break;
+        if (resultCode!=RESULT_OK){
+            return;
+        }
+        msetAvatarListener.setAvatar(requestCode,data,ivPersonalAvatar);
+        if (requestCode==OnSetAvatarListener.REQUEST_CROP_PHOTO){
+            L.e("++++++++++++++进入修改头像方法++++++++++++++");
+            updateAvatar2teacher();
         }
     }
+
+    private void updateAvatar2teacher() {
+        File file = new File(OnSetAvatarListener.getAvatarPath(context,
+                user.getMavatarPath()+"/"+user.getMuserName()+I.AVATAR_SUFFIX_JPG));
+        L.e("file="+file.exists());
+        L.e("file="+file.getAbsolutePath());
+        GoodsDao.updateavatar(context, user.getMuserName(), file, new OkHttpUtils.OnCompleteListener<Result>() {
+            @Override
+            public void onSuccess(Result result) {
+                if (result!=null){
+                    if (result.isRetMsg()){
+                        Gson gson = new Gson();
+                        UserAvater u = gson.fromJson(result.getRetData().toString(), UserAvater.class);
+                        L.e("个人信息更改user1path = "+u.getMavatarPath());
+                        ImageLoader.downloadAvatar(ImageLoader.getAvatar(u),context,ivPersonalAvatar);
+                        FuLiCenterApplication.setUser(u);
+                    }
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+                L.e(error);
+            }
+        });
+    }
+
+    //    实现进入图库选择图片修改头像功能
+//    static final int AVATAR_TYPE=10001;
+//    private void updateAvatar() {
+//        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//        intent.setType("image/*");
+//        startActivityForResult(intent,AVATAR_TYPE);
+//    }
+//
+//    @Override
+//    protected void onActivityResult(final int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        switch (requestCode){
+//            case AVATAR_TYPE:
+//                if (resultCode==RESULT_OK){
+//                    final Uri uri = data.getData();
+//                    ContentResolver resolver = getContentResolver();
+//                    String  file = resolver.getType(uri);
+//                    if (file.startsWith("image")){
+//                        final Cursor cursor = resolver.query(uri, new String[]{MediaStore.Images.Media.DATA}, null, null, null);
+//                        cursor.moveToFirst();
+//                        final String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+//                        File filein = new File(path);
+//                        Log.i("main",filein.toString());
+//
+//                        final Bitmap bitmap = BitmapFactory.decodeFile(path);
+//                        GoodsDao.updateavatar(context, username, filein, new OkHttpUtils.OnCompleteListener<Result>() {
+//                            @Override
+//                            public void onSuccess(Result result) {
+//                                if(result.isRetMsg()){
+//
+//                                    ivPersonalAvatar.setImageBitmap(bitmap);
+//                                    UserDao dao = new UserDao(context);
+//                                    UserAvater user = FuLiCenterApplication.getUser();
+//                                   // user.setMavatarLastUpdateTime(SystemClock.currentThreadTimeMillis());
+//                                    user.setMavatarPath(path);
+//                                    user.setMavatarSuffix(path.substring(path.length()-4));
+//                                    FuLiCenterApplication.setUser(user);
+//                                    boolean b = dao.updateUser(user);
+//                                    if (b){
+//                                        CommonUtils.showShortToast(R.string.updateavatarsuccess);
+//                                    }else {
+//                                        CommonUtils.showShortToast("图片修异常");
+//                                    }
+//                                }
+//                            }
+//
+//                            @Override
+//                            public void onError(String error) {
+//
+//                            }
+//                        });
+//                    }
+//                }
+//                break;
+//        }
+//    }
 
     private void showdialog() {
         final View layout = View.inflate(context, R.layout.update_personnal_info, null);

@@ -1,5 +1,7 @@
 package cn.ucai.fulicenter.bean;
 
+import cn.ucai.fulicenter.I;
+
 /**
  * Created by Administrator on 2016/10/13.
  */
@@ -56,7 +58,7 @@ public class UserAvater {
     }
 
     public String getMavatarSuffix() {
-        return mavatarSuffix;
+        return mavatarSuffix!=null?mavatarSuffix: I.AVATAR_SUFFIX_JPG;
     }
 
     public void setMavatarSuffix(String mavatarSuffix) {

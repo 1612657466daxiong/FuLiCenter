@@ -17,6 +17,7 @@ import java.net.URLEncoder;
 
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.bean.UserAvater;
 import cn.ucai.fulicenter.net.OkHttpUtils;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -365,16 +366,21 @@ public class ImageLoader {
                 .showImage(context);
     }
     static final String TYPE_AVATAR_USER="user_avatar";
-    public static void downloadAvatar(Context context,String name_nick,String suffix,ImageView imageView){
-
-        String url= I.SERVER_ROOT+I.REQUEST_DOWNLOAD_AVATAR+"?"+I.NAME_OR_HXID+"="+name_nick+
-                "&"+I.AVATAR_TYPE+"="+TYPE_AVATAR_USER+"&"+I.Avatar.AVATAR_SUFFIX+"="+suffix+"&"+I.Avatar.AVATAR_WIDTH+"="+50
-                +"&"+I.Avatar.AVATAR_HEIGTH+"="+50;
-        Log.i("main",url);
+    public static String getAvatar(UserAvater user){
+        if (user!=null){
+            //http://101.251.196.90:8000/FuLiCenterServerV2.0/downloadAvatar?name_or_hxid=a897572&avatarType=user_avatar&m_avatar_suffix=.png&width=80&height=80
+            String url= I.SERVER_ROOT+I.REQUEST_DOWNLOAD_AVATAR+"?"+I.NAME_OR_HXID+"="+user.getMuserName()+
+                    "&"+I.AVATAR_TYPE+"="+TYPE_AVATAR_USER+"&"+I.Avatar.AVATAR_SUFFIX+"="+user.getMavatarSuffix()+"&"+I.Avatar.AVATAR_WIDTH+"="+50
+                    +"&"+I.Avatar.AVATAR_HEIGTH+"="+50+"&"+user.getMavatarLastUpdateTime();
+            L.e("Avatar: "+url);
+            return url;
+        }
+        return null;
+    }
+    public static void downloadAvatar(String url,Context context,ImageView imageView){
         ImageLoader.build(url)
                 .defaultPicture(R.drawable.nopic)
                 .imageView(imageView)
-                .setDragging(true)
                 .showImage(context);
 
     }

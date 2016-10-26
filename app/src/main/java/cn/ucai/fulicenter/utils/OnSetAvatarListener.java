@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -193,7 +194,9 @@ public class OnSetAvatarListener implements View.OnClickListener {
      */
     private void saveCropAndShowAvatar(ImageView ivAvatar, Intent data) {
         Bundle extras = data.getExtras();
-        Bitmap avatar = extras.getParcelable("data");
+      //String path = data.getData().getPath();
+        //Bitmap avatar = BitmapFactory.decodeFile(path);
+     Bitmap avatar = extras.getParcelable("data");
         if (avatar == null) {
             return;
         }

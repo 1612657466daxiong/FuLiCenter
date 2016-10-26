@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     RelativeLayout rlayout;
 
 
-    int currIndex = 5;
+    int currIndex;
     Fragment[] fragments = new Fragment[5];
 
     int index;
@@ -56,8 +56,14 @@ public class MainActivity extends AppCompatActivity {
         fragments[1]=new NewGoodsFragment();
         fragments[2]=new CategoryFragment();
         fragments[3]=new PersonalFragment();
-
-
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_stay,fragments[0])
+                .add(R.id.fragment_stay,fragments[1])
+                .add(R.id.fragment_stay,fragments[2])
+                .hide(fragments[0])
+                .hide(fragments[2])
+                .show(fragments[1])
+                .commit();
 
     }
 

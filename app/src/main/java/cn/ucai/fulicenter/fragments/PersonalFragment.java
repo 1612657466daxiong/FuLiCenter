@@ -30,6 +30,7 @@ import cn.ucai.fulicenter.net.GoodsDao;
 import cn.ucai.fulicenter.net.OkHttpUtils;
 import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.ImageLoader;
+import cn.ucai.fulicenter.utils.L;
 import cn.ucai.fulicenter.utils.MFGT;
 import cn.ucai.fulicenter.utils.ResultUtils;
 
@@ -74,7 +75,8 @@ public class PersonalFragment extends Fragment {
 
     private void initData() {
         UserAvater user = FuLiCenterApplication.getUser();
-        ImageLoader.downloadAvatar(context, user.getMuserName(), user.getMavatarSuffix(), ivAvatartitle);
+        ImageLoader.downloadAvatar(ImageLoader.getAvatar(user),context,ivAvatartitle);
+        L.e("个人中心初始化user1path = "+user.getMavatarPath());
         Log.i("main","----------------更改个人中心头像----------------------");
         tvName.setText(user.getMuserName());
         findcountcollect(user.getMuserName());
@@ -125,6 +127,9 @@ public class PersonalFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        if (FuLiCenterApplication.getUser()==null){
+            return;
+        }
         String  username = FuLiCenterApplication.getUser().getMuserName();
        GoodsDao.finduserinfobyusername(context, username, new OkHttpUtils.OnCompleteListener<Result>() {
            @Override
@@ -133,12 +138,16 @@ public class PersonalFragment extends Fragment {
 
                    String  string=  result.getRetData().toString();
                    Gson gson = new Gson();
-                 //  UserAvater user = gson.fromJson(string, UserAvater.class);
-                   UserAvater user = FuLiCenterApplication.getUser();
+                   UserAvater user = gson.fromJson(string, UserAvater.class);
+                   //  UserAvater user = gson.fromJson(string, UserAvater.class);
+                 //  UserAvater user = FuLiCenterApplication.getUser();
                 //   ImageLoader.downloadAvatar(context, user.getMuserName(), user.getMavatarSuffix(), ivAvatartitle);
-                   String path = user.getMavatarPath();
-                   Bitmap bitmap = BitmapFactory.decodeFile(path);
-                   ivAvatartitle.setImageBitmap(bitmap);
+                 //  String path = user.getMavatarPath();
+                   //这个方法有很大的bug  因为会要求用户必须下载或者拥有自己的头像在指定路径，否则会出现头像二次加载出现蓝图
+                 //  Bitmap bitmap = BitmapFactory.decodeFile(path);
+                  // ivAvatartitle.setImageBitmap(bitmap);
+                   L.e("个人中心再加载user1path = "+user.getMavatarPath());
+                   ImageLoader.downloadAvatar(ImageLoader.getAvatar(user),context,ivAvatartitle);
                    Log.i("main","----------------更改个人中心头像2222----------------------");
                    tvName.setText(user.getMuserName());
                }
