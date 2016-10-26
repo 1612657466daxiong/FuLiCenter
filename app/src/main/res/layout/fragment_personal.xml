@@ -82,6 +82,7 @@
             android:layout_marginBottom="5dp"
             >
             <LinearLayout
+                android:id="@+id/collect_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_weight="1"

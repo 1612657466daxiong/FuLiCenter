@@ -1,9 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="cn.ucai.fulicenter.activitys.CollectActivity">
+    tools:context="cn.ucai.fulicenter.activitys.CollectActivity"
+    android:orientation="vertical"
+    android:background="@color/list_background">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white">
+        <ImageView
+            android:id="@+id/collect_backpress"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/back"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="收藏的宝贝"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:textSize="25sp"
+            android:textColor="@color/black"/>
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray">
+    </View>
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/collect_srl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/collect_reclv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-</RelativeLayout>
+        </android.support.v7.widget.RecyclerView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</LinearLayout>

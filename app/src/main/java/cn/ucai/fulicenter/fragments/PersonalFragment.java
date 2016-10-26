@@ -1,9 +1,6 @@
 package cn.ucai.fulicenter.fragments;
 
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -11,11 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-
-import java.io.File;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -32,7 +28,6 @@ import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.ImageLoader;
 import cn.ucai.fulicenter.utils.L;
 import cn.ucai.fulicenter.utils.MFGT;
-import cn.ucai.fulicenter.utils.ResultUtils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -54,6 +49,8 @@ public class PersonalFragment extends Fragment {
     TextView mtvSet;
 
     MainActivity context;
+    @Bind(R.id.collect_layout)
+    LinearLayout collectLayout;
 
     public PersonalFragment() {
         // Required empty public constructor
@@ -75,13 +72,12 @@ public class PersonalFragment extends Fragment {
 
     private void initData() {
         UserAvater user = FuLiCenterApplication.getUser();
-        ImageLoader.downloadAvatar(ImageLoader.getAvatar(user),context,ivAvatartitle);
-        L.e("个人中心初始化user1path = "+user.getMavatarPath());
-        Log.i("main","----------------更改个人中心头像----------------------");
+        ImageLoader.downloadAvatar(ImageLoader.getAvatar(user), context, ivAvatartitle);
+        L.e("个人中心初始化user1path = " + user.getMavatarPath());
+        Log.i("main", "----------------更改个人中心头像----------------------");
         tvName.setText(user.getMuserName());
         findcountcollect(user.getMuserName());
     }
-
 
 
     private void findcountcollect(String username) {
@@ -90,7 +86,6 @@ public class PersonalFragment extends Fragment {
             public void onSuccess(MessageBean result) {
                 if (result != null) {
                     if (result.isSuccess()) {
-
                         countGoods.setText(result.getMsg());
                     } else {
                         CommonUtils.showShortToast(R.string.findcountcollect);
@@ -109,11 +104,14 @@ public class PersonalFragment extends Fragment {
 
     }
 
-    @OnClick({R.id.tv_set})
-    public void onClick(View view){
-        switch (view.getId()){
+    @OnClick({R.id.tv_set,R.id.collect_layout})
+    public void onClick(View view) {
+        switch (view.getId()) {
             case R.id.tv_set:
                 MFGT.gotoPersonInfoActivity(context);
+                break;
+            case R.id.collect_layout:
+                MFGT.gotoCollectActivity(context,FuLiCenterApplication.getUser().getMuserName());
                 break;
         }
     }
@@ -127,37 +125,37 @@ public class PersonalFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (FuLiCenterApplication.getUser()==null){
+        if (FuLiCenterApplication.getUser() == null) {
             return;
         }
-        String  username = FuLiCenterApplication.getUser().getMuserName();
-       GoodsDao.finduserinfobyusername(context, username, new OkHttpUtils.OnCompleteListener<Result>() {
-           @Override
-           public void onSuccess(Result result) {
-               if (result!=null){
+        String username = FuLiCenterApplication.getUser().getMuserName();
+        GoodsDao.finduserinfobyusername(context, username, new OkHttpUtils.OnCompleteListener<Result>() {
+            @Override
+            public void onSuccess(Result result) {
+                if (result != null) {
 
-                   String  string=  result.getRetData().toString();
-                   Gson gson = new Gson();
-                   UserAvater user = gson.fromJson(string, UserAvater.class);
-                   //  UserAvater user = gson.fromJson(string, UserAvater.class);
-                 //  UserAvater user = FuLiCenterApplication.getUser();
-                //   ImageLoader.downloadAvatar(context, user.getMuserName(), user.getMavatarSuffix(), ivAvatartitle);
-                 //  String path = user.getMavatarPath();
-                   //这个方法有很大的bug  因为会要求用户必须下载或者拥有自己的头像在指定路径，否则会出现头像二次加载出现蓝图
-                 //  Bitmap bitmap = BitmapFactory.decodeFile(path);
-                  // ivAvatartitle.setImageBitmap(bitmap);
-                   L.e("个人中心再加载user1path = "+user.getMavatarPath());
-                   ImageLoader.downloadAvatar(ImageLoader.getAvatar(user),context,ivAvatartitle);
-                   Log.i("main","----------------更改个人中心头像2222----------------------");
-                   tvName.setText(user.getMuserName());
-               }
-           }
+                    String string = result.getRetData().toString();
+                    Gson gson = new Gson();
+                    UserAvater user = gson.fromJson(string, UserAvater.class);
+                    //  UserAvater user = gson.fromJson(string, UserAvater.class);
+                    //  UserAvater user = FuLiCenterApplication.getUser();
+                    //   ImageLoader.downloadAvatar(context, user.getMuserName(), user.getMavatarSuffix(), ivAvatartitle);
+                    //  String path = user.getMavatarPath();
+                    //这个方法有很大的bug  因为会要求用户必须下载或者拥有自己的头像在指定路径，否则会出现头像二次加载出现蓝图
+                    //  Bitmap bitmap = BitmapFactory.decodeFile(path);
+                    // ivAvatartitle.setImageBitmap(bitmap);
+                    L.e("个人中心再加载user1path = " + user.getMavatarPath());
+                    ImageLoader.downloadAvatar(ImageLoader.getAvatar(user), context, ivAvatartitle);
+                    Log.i("main", "----------------更改个人中心头像2222----------------------");
+                    tvName.setText(user.getMuserName());
+                }
+            }
 
-           @Override
-           public void onError(String error) {
+            @Override
+            public void onError(String error) {
                 CommonUtils.showShortToast(error);
-           }
-       });
+            }
+        });
     }
 
 }

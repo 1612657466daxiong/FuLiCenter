@@ -10,6 +10,7 @@ import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.bean.BoutiqueBean;
 import cn.ucai.fulicenter.bean.CategoryChildBean;
 import cn.ucai.fulicenter.bean.CategoryGroupBean;
+import cn.ucai.fulicenter.bean.CollectBean;
 import cn.ucai.fulicenter.bean.GoodsDetailsBean;
 import cn.ucai.fulicenter.bean.MessageBean;
 import cn.ucai.fulicenter.bean.NewGoodsBean;
@@ -152,6 +153,25 @@ public class GoodsDao {
         utils.url(I.SERVER_ROOT+I.REQUEST_FIND_USER)
                 .addParam(I.User.USER_NAME,name)
                 .targetClass(Result.class)
+                .execute(listener);
+    }
+
+    public static void deletecollectbyid(Context context,String username,String id,OkHttpUtils.OnCompleteListener listener){
+        OkHttpUtils<MessageBean> utils = new OkHttpUtils<>(context);
+        utils.url(I.SERVER_ROOT+I.REQUEST_DELETE_COLLECT)
+                .addParam(I.Collect.GOODS_ID,id)
+                .addParam(I.Collect.USER_NAME,username)
+                .targetClass(MessageBean.class)
+                .execute(listener);
+    }
+
+    public static void findcollects(Context context,String username,String pageid,OkHttpUtils.OnCompleteListener listener){
+        OkHttpUtils<CollectBean[]> utils = new OkHttpUtils<>(context);
+        utils.url(I.SERVER_ROOT+I.REQUEST_FIND_COLLECTS)
+                .addParam(I.Collect.USER_NAME,username)
+                .addParam(I.PAGE_ID,pageid)
+                .addParam(I.PAGE_SIZE,String.valueOf(I.PAGE_SIZE_DEFAULT))
+                .targetClass(CollectBean[].class)
                 .execute(listener);
     }
 

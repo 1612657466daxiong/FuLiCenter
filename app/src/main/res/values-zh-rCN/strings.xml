@@ -28,5 +28,8 @@
     <string name="findcountcollect">获取收藏数量失败</string>
     <string name="uneditable_username">不允许修改用户名</string>
     <string name="updateavatarsuccess">修改头像成功</string>
+    <string name="deletecollectsuccess">删除收藏成功</string>
+    <string name="deletecollectfail">删除收藏失败</string>
+    <string name="deletecollectexception">操作异常</string>
 </resources>
 

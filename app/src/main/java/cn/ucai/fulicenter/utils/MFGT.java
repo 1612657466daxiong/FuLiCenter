@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.activitys.BoutiqueDetActivity;
 import cn.ucai.fulicenter.activitys.Category2Activity;
+import cn.ucai.fulicenter.activitys.CollectActivity;
 import cn.ucai.fulicenter.activitys.GoodsDetActivity;
 import cn.ucai.fulicenter.activitys.LoginActivity;
 import cn.ucai.fulicenter.activitys.MainActivity;
@@ -79,4 +80,10 @@ public class MFGT {
         Intent intent = new Intent(activity, PersonInfoActivity.class);
         startActivity(activity,intent);
     }
+    public static void gotoCollectActivity(Activity activity,String username){
+        Intent intent = new Intent(activity, CollectActivity.class);
+        intent.putExtra(I.Collect.USER_NAME,username);
+        startActivity(activity,intent);
+    }
+
 }
