@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                 ft.hide(fragments[currIndex]);
             }
             if (!fragments[index].isAdded()){
-                ft.add(R.id.fragment_stay,fragments[index]);
+                ft.replace(R.id.fragment_stay,fragments[index]);
             }
             ft.show(fragments[index]).commitAllowingStateLoss();
         }
