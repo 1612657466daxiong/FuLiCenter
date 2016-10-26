@@ -37,8 +37,6 @@ public class CollectAdapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = View.inflate(context, R.layout.item_collect_goods, null);
         CollectViewHolder viewHolder = new CollectViewHolder(view);
-
-
         viewHolder.ivCollectDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,7 +85,8 @@ public class CollectAdapter extends RecyclerView.Adapter {
         CollectViewHolder viewHolder = (CollectViewHolder) holder;
         viewHolder.tvCollectName.setText(collect.getGoodsName());
         ImageLoader.downloadImg(context,viewHolder.ivCollectGoods,collect.getGoodsThumb());
-        viewHolder.itemView.setTag(collect);
+        viewHolder.ivCollectDelete.setTag(collect);
+        viewHolder.ivCollectGoods.setTag(collect);
     }
 
     @Override
