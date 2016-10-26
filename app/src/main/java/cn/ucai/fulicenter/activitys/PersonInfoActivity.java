@@ -138,7 +138,7 @@ public class PersonInfoActivity extends AppCompatActivity {
                                     ivPersonalAvatar.setImageBitmap(bitmap);
                                     UserDao dao = new UserDao(context);
                                     UserAvater user = FuLiCenterApplication.getUser();
-                                    user.setMavatarLastUpdateTime(SystemClock.currentThreadTimeMillis()+"");
+                                   // user.setMavatarLastUpdateTime(SystemClock.currentThreadTimeMillis());
                                     user.setMavatarPath(path);
                                     user.setMavatarSuffix(path.substring(path.length()-4));
                                     FuLiCenterApplication.setUser(user);

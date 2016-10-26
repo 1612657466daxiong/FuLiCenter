@@ -147,4 +147,12 @@ public class GoodsDao {
                 .execute(listener);
     }
 
+    public static void finduserinfobyusername(Context context,String name,OkHttpUtils.OnCompleteListener listener){
+        OkHttpUtils<Result> utils = new OkHttpUtils<>(context);
+        utils.url(I.SERVER_ROOT+I.REQUEST_FIND_USER)
+                .addParam(I.User.USER_NAME,name)
+                .targetClass(Result.class)
+                .execute(listener);
+    }
+
 }

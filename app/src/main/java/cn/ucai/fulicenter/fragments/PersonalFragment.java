@@ -2,6 +2,8 @@ package cn.ucai.fulicenter.fragments;
 
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -11,6 +13,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
+import java.io.File;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -18,12 +24,14 @@ import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.activitys.MainActivity;
 import cn.ucai.fulicenter.bean.MessageBean;
+import cn.ucai.fulicenter.bean.Result;
 import cn.ucai.fulicenter.bean.UserAvater;
 import cn.ucai.fulicenter.net.GoodsDao;
 import cn.ucai.fulicenter.net.OkHttpUtils;
 import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.ImageLoader;
 import cn.ucai.fulicenter.utils.MFGT;
+import cn.ucai.fulicenter.utils.ResultUtils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -117,7 +125,30 @@ public class PersonalFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        initData();
+        String  username = FuLiCenterApplication.getUser().getMuserName();
+       GoodsDao.finduserinfobyusername(context, username, new OkHttpUtils.OnCompleteListener<Result>() {
+           @Override
+           public void onSuccess(Result result) {
+               if (result!=null){
+
+                   String  string=  result.getRetData().toString();
+                   Gson gson = new Gson();
+                 //  UserAvater user = gson.fromJson(string, UserAvater.class);
+                   UserAvater user = FuLiCenterApplication.getUser();
+                //   ImageLoader.downloadAvatar(context, user.getMuserName(), user.getMavatarSuffix(), ivAvatartitle);
+                   String path = user.getMavatarPath();
+                   Bitmap bitmap = BitmapFactory.decodeFile(path);
+                   ivAvatartitle.setImageBitmap(bitmap);
+                   Log.i("main","----------------更改个人中心头像2222----------------------");
+                   tvName.setText(user.getMuserName());
+               }
+           }
+
+           @Override
+           public void onError(String error) {
+                CommonUtils.showShortToast(error);
+           }
+       });
     }
 
 }
