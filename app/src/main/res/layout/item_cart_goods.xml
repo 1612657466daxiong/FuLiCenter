@@ -6,14 +6,15 @@
     android:background="@color/white"
     android:layout_margin="2dp">
 
-    <RadioButton
+    <CheckBox
         android:id="@+id/cart_ischeck"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawableEnd="@drawable/checkbox_style"
         android:layout_centerVertical="true"
        android:layout_marginLeft="20dp"
-        android:button="@null"/>
+        android:button="@null"
+        android:checked="false"/>
     <ImageView
 
         android:layout_toRightOf="@id/cart_ischeck"

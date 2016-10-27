@@ -91,22 +91,27 @@ public class CarFragment extends Fragment {
     }
 
     private void initData() {
-        GoodsDao.downloadcart(context, FuLiCenterApplication.getUser().getMuserName(), new OkHttpUtils.OnCompleteListener<CartBean[]>() {
-            @Override
-            public void onSuccess(CartBean[] result) {
-                if (result != null) {
-                    L.e(result.toString());
-                    ArrayList<CartBean> carlist = ConvertUtils.array2List(result);
-                    mAdapter.initData(carlist);
-                    setshownothing(true);
+        String muserName = FuLiCenterApplication.getUser().getMuserName();
+        if (muserName!=null){
+            GoodsDao.downloadcart(context,muserName, new OkHttpUtils.OnCompleteListener<CartBean[]>() {
+                @Override
+                public void onSuccess(CartBean[] result) {
+                    if (result != null) {
+                        L.e(result.toString());
+                        ArrayList<CartBean> carlist = ConvertUtils.array2List(result);
+                        list.clear();
+                        list.addAll(carlist);
+                        mAdapter.initData(list);
+                        setshownothing(true);
+                    }
                 }
-            }
 
-            @Override
-            public void onError(String error) {
+                @Override
+                public void onError(String error) {
 
-            }
-        });
+                }
+            });
+        }
     }
 
     private void initView() {
@@ -158,7 +163,8 @@ public class CarFragment extends Fragment {
             mshouldPay.setText("合计：￥ " + Double.valueOf(sumPrice));
             mcartSavemoney.setText("节省：￥ " + Double.valueOf(sumPrice - rankPrice));
         } else {
-            setshownothing(false);
+          mshouldPay.setText("合计：￥0 ");
+            mcartSavemoney.setText("节省：￥0 ");
         }
     }
 
@@ -166,5 +172,13 @@ public class CarFragment extends Fragment {
         price = price.substring(price.indexOf("￥") + 1);
         int jaige = Integer.valueOf(price);
         return jaige;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mboast!=null){
+            context.unregisterReceiver(mboast);
+        }
     }
 }

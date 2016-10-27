@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -53,7 +54,7 @@ public class CartAdapter extends RecyclerView.Adapter {
                 int id = cartBean.getId();
                 int count = cartBean.getCount();
                 updatecount(id,count+1,position);
-                mCartlist.get(position).setCount(count);
+                mCartlist.get(position).setCount(count+1);
                 notifyDataSetChanged();
             }
         });
@@ -65,24 +66,25 @@ public class CartAdapter extends RecyclerView.Adapter {
                 int id = cartBean.getId();
                 int count = cartBean.getCount();
                 updatecount(id,count-1,position);
-                mCartlist.get(position).setCount(count);
+                mCartlist.get(position).setCount(count-1);
                 notifyDataSetChanged();
             }
         });
-        viewHolder.ischecked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    int postition = (int) buttonView.getTag();
-                    mCartlist.get(postition).setChecked(!isChecked);
-                    buttonView.setChecked(isChecked);
-                    notifyDataSetChanged();
-                }else {
-                    buttonView.setChecked(isChecked);
-                    notifyDataSetChanged();
-                }
-            }
-        });
+      viewHolder.ischecked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+          @Override
+          public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+              if (isChecked){
+                  int tag = (int) buttonView.getTag();
+                  context.sendBroadcast(new Intent("updatecount"));
+                  mCartlist.get(tag).setChecked(isChecked);
+              }else {
+                  int tag = (int) buttonView.getTag();
+                  context.sendBroadcast(new Intent("updatecount"));
+                  mCartlist.get(tag).setChecked(isChecked);
+              }
+
+          }
+      });
         return viewHolder;
     }
 
@@ -93,7 +95,7 @@ public class CartAdapter extends RecyclerView.Adapter {
         int count = cart.getCount();
         viewHolder.tvCartCount.setText(String.valueOf(count));
         viewHolder.tvCartName.setText(cart.getGoods().getGoodsName());
-        viewHolder.tvItemPrice.setText(cart.getGoods().getShopPrice());
+        viewHolder.tvItemPrice.setText(cart.getGoods().getCurrencyPrice());
         ImageLoader.downloadImg(context,viewHolder.ivCartGood,cart.getGoods().getGoodsThumb());
         viewHolder.changeCart.setTag(position);
         viewHolder.delCart.setTag(position);
@@ -112,7 +114,6 @@ public class CartAdapter extends RecyclerView.Adapter {
         }else {
             changecount(cartid, count);
         }
-
     }
 
     private void deleteCartbydel(int cartid, final int position) {
@@ -129,7 +130,6 @@ public class CartAdapter extends RecyclerView.Adapter {
                     }
                 }
             }
-
             @Override
             public void onError(String error) {
 
@@ -150,7 +150,6 @@ public class CartAdapter extends RecyclerView.Adapter {
                     }
                 }
             }
-
             @Override
             public void onError(String error) {
                 CommonUtils.showShortToast(error);
@@ -160,7 +159,7 @@ public class CartAdapter extends RecyclerView.Adapter {
 
     static class CartViewHolder extends RecyclerView.ViewHolder{
         @Bind(R.id.cart_ischeck)
-        RadioButton ischecked;
+        CheckBox ischecked;
         @Bind(R.id.iv_cart_good)
         ImageView ivCartGood;
         @Bind(R.id.tv_cart_name)
