@@ -31,5 +31,11 @@
     <string name="deletecollectsuccess">删除收藏成功</string>
     <string name="deletecollectfail">删除收藏失败</string>
     <string name="deletecollectexception">操作异常</string>
+    <string name="addcartsuccess">添加商品成功</string>
+    <string name="addcartfail">添加商品失败</string>
+    <string name="updatecartcount">修改购物车商品信息成功</string>
+    <string name="updatecartcountfail">失败</string>
+    <string name="deletecartsuccess">已删除该商品</string>
+    <string name="deletecartfail">删除失败</string>
 </resources>
 

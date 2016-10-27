@@ -5,14 +5,47 @@
              android:layout_height="match_parent"
              tools:context="cn.ucai.fulicenter.fragments.CarFragment"
     android:orientation="vertical">
-<android.support.v7.widget.RecyclerView
-    android:id="@+id/cart_recv"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_weight="1">
 
-</android.support.v7.widget.RecyclerView>
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/car_swrl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/cart_tv_shuaxin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="刷新中"
+                android:gravity="center"/>
+            <TextView
+                android:id="@+id/tv_nothing"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="购物车空空如也，去选点好东西吧"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:textColor="@color/orange"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/cart_recv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/list_background"
+                >
+
+
+            </android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black"></View>
     <RelativeLayout
+        android:id="@+id/layout_bottom_cart"
         android:layout_width="match_parent"
         android:layout_height="80dp">
         <RadioButton
@@ -38,6 +71,7 @@
             android:gravity="end"
             android:layout_margin="5dp"/>
         <TextView
+            android:id="@+id/cart_savemoney"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"

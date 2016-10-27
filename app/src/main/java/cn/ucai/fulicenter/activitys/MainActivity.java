@@ -17,6 +17,7 @@ import butterknife.OnClick;
 import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.fragments.BoutiqueFragment;
+import cn.ucai.fulicenter.fragments.CarFragment;
 import cn.ucai.fulicenter.fragments.CategoryFragment;
 import cn.ucai.fulicenter.fragments.NewGoodsFragment;
 import cn.ucai.fulicenter.fragments.PersonalFragment;
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         fragments[1]=new NewGoodsFragment();
         fragments[2]=new CategoryFragment();
         fragments[3]=new PersonalFragment();
+        fragments[4]=new CarFragment();
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_stay,fragments[0])
                 .add(R.id.fragment_stay,fragments[1])
@@ -88,7 +90,11 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
             case R.id.rb_cart:
-                index=4;
+                if (FuLiCenterApplication.getUser()!=null){
+                    index=4;
+                }else {
+                    MFGT.gotoLoginActivityforCart(this);
+                }
                 break;
         }
         setFragment();
@@ -127,11 +133,14 @@ public class MainActivity extends AppCompatActivity {
                 if (resultCode==101){
                     index=3;
                     setFragment();
-                }else {
+                }
+                break;
+            case 112:
+                if (resultCode==101){
+                    index=4;
                     setFragment();
                 }
                 break;
-
         }
     }
 }

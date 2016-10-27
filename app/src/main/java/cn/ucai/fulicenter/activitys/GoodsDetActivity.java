@@ -112,7 +112,7 @@ public class GoodsDetActivity extends AppCompatActivity {
     }
 
 
-    @OnClick({R.id.id_ivback,R.id.id_ivcollect,R.id.id_ivshare})
+    @OnClick({R.id.id_ivback,R.id.id_ivcollect,R.id.id_ivshare,R.id.id_iv_det_car})
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.id_ivback:
@@ -124,7 +124,28 @@ public class GoodsDetActivity extends AppCompatActivity {
             case R.id.id_ivshare:
                 showShare();
                 break;
+            case R.id.id_iv_det_car:
+                addcargood();
+                break;
         }
+    }
+
+    private void addcargood() {
+        GoodsDao.addcartgood(context,details.getGoodsId(),FuLiCenterApplication.getUser().getMuserName(),1, new OkHttpUtils.OnCompleteListener<MessageBean>() {
+            @Override
+            public void onSuccess(MessageBean result) {
+                if (result.isSuccess()){
+                    CommonUtils.showShortToast(R.string.addcartsuccess);
+                }else {
+                    CommonUtils.showShortToast(R.string.addcartfail);
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+                CommonUtils.showShortToast(error);
+            }
+        });
     }
 
     private void showShare() {

@@ -50,6 +50,15 @@
         android:layout_toLeftOf="@id/id_ivcollect"
         android:layout_marginRight="15dp"
         android:layout_centerVertical="true"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="10"
+        android:textSize="15sp"
+        android:layout_alignEnd="@id/id_iv_det_car"
+        android:layout_centerVertical="true"
+        android:textColor="@color/red"
+        />
 </RelativeLayout>
     <LinearLayout
         android:layout_marginTop="20dp"

@@ -1,24 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="horizontal"
               android:layout_width="match_parent"
-              android:layout_height="60dp">
+              android:layout_height="60dp"
+    android:background="@color/white"
+    android:layout_margin="2dp">
+
     <RadioButton
         android:id="@+id/cart_ischeck"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawableEnd="@drawable/checkbox_style"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="25dp"
+        android:layout_centerVertical="true"
+       android:layout_marginLeft="20dp"
         android:button="@null"/>
     <ImageView
+
+        android:layout_toRightOf="@id/cart_ischeck"
         android:id="@+id/iv_cart_good"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_gravity="center_vertical"
+        android:layout_centerVertical="true"
         android:layout_marginLeft="25dp"
         android:src="@drawable/nopic"/>
     <RelativeLayout
+        android:layout_toRightOf="@id/iv_cart_good"
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
         <TextView
@@ -30,7 +36,6 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:textColor="@color/black"
-            android:maxWidth="80dp"
             />
         <LinearLayout
             android:layout_below="@id/tv_cart_name"
@@ -69,5 +74,5 @@
         android:gravity="center"
         android:textSize="25sp"
         android:textColor="@color/main_orange"
-        android:layout_marginLeft="100dp"/>
-</LinearLayout>
+        android:layout_alignParentEnd="true"/>
+</RelativeLayout>

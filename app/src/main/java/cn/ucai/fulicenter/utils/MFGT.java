@@ -86,4 +86,8 @@ public class MFGT {
         startActivity(activity,intent);
     }
 
+    public static void gotoLoginActivityforCart(MainActivity context) {
+        Intent intent = new Intent(context,LoginActivity.class);
+        startActivityforresult(context, intent,112);
+    }
 }

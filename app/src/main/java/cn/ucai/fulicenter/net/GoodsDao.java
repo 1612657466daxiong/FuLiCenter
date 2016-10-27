@@ -8,6 +8,7 @@ import java.lang.reflect.Array;
 
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.bean.BoutiqueBean;
+import cn.ucai.fulicenter.bean.CartBean;
 import cn.ucai.fulicenter.bean.CategoryChildBean;
 import cn.ucai.fulicenter.bean.CategoryGroupBean;
 import cn.ucai.fulicenter.bean.CollectBean;
@@ -172,6 +173,43 @@ public class GoodsDao {
                 .addParam(I.PAGE_ID,pageid)
                 .addParam(I.PAGE_SIZE,String.valueOf(I.PAGE_SIZE_DEFAULT))
                 .targetClass(CollectBean[].class)
+                .execute(listener);
+    }
+
+    public static void addcartgood(Context context,int goodsid,String username,int count,OkHttpUtils.OnCompleteListener listener){
+        OkHttpUtils<MessageBean> utils = new OkHttpUtils<>(context);
+        utils.url(I.SERVER_ROOT+I.REQUEST_ADD_CART)
+                .addParam(I.Cart.GOODS_ID,String.valueOf(goodsid))
+                .addParam(I.Cart.USER_NAME,username)
+                .addParam(I.Cart.COUNT,String.valueOf(count))
+                .addParam(I.Cart.IS_CHECKED,String.valueOf(false))
+                .targetClass(MessageBean.class)
+                .execute(listener);
+    }
+
+    public static void downloadcart(Context context,String username,OkHttpUtils.OnCompleteListener listener){
+        OkHttpUtils<CartBean[]> utils = new OkHttpUtils<>(context);
+        utils.url(I.SERVER_ROOT+I.REQUEST_FIND_CARTS)
+                .addParam(I.Cart.USER_NAME,username)
+                .targetClass(CartBean[].class)
+                .execute(listener);
+    }
+
+    public static void  updatecart(Context context,int cartid,int count,OkHttpUtils.OnCompleteListener listener){
+        OkHttpUtils<MessageBean> utils = new OkHttpUtils<>(context);
+        utils.url(I.SERVER_ROOT+I.REQUEST_UPDATE_CART)
+                .addParam(I.Cart.ID,String.valueOf(cartid))
+                .addParam(I.Cart.COUNT,String.valueOf(count))
+                .addParam(I.Cart.IS_CHECKED,String.valueOf(0))
+                .targetClass(MessageBean.class)
+                .execute(listener);
+    }
+
+    public static void deletecart(Context context,int cartid,OkHttpUtils.OnCompleteListener listener){
+        OkHttpUtils<MessageBean> utils = new OkHttpUtils<>(context);
+        utils.url(I.SERVER_ROOT+I.REQUEST_DELETE_CART)
+                .addParam(I.Cart.ID,String.valueOf(cartid))
+                .targetClass(MessageBean.class)
                 .execute(listener);
     }
 
