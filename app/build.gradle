@@ -25,11 +25,6 @@ dependencies {
     compile files('libs/okio-1.6.0.jar')
     compile files('libs/gson-2.2.4.jar')
     compile files('libs/okhttp-3.2.0.jar')
-    compile 'com.android.support:appcompat-v7:23.3.0'
-    compile 'com.android.support:recyclerview-v7:23.3.0'
-    compile 'com.jakewharton:butterknife:7.0.1'
-    compile 'com.android.support:support-v4:23.3.0'
-    compile 'com.android.support:cardview-v7:23.3.0'
     compile files('libs/MobCommons-2016.1020.1028.jar')
     compile files('libs/MobTools-2016.1020.1028.jar')
     compile files('libs/ShareSDK-Core-2.7.8.jar')
@@ -43,4 +38,9 @@ dependencies {
     compile files('libs/ShareSDK-Wechat-Core-2.7.8.jar')
     compile files('libs/ShareSDK-Wechat-Favorite-2.7.8.jar')
     compile files('libs/ShareSDK-Wechat-Moments-2.7.8.jar')
+    compile 'com.android.support:appcompat-v7:23.3.0'
+    compile 'com.android.support:recyclerview-v7:23.3.0'
+    compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'com.android.support:support-v4:23.3.0'
+    compile 'com.android.support:cardview-v7:23.3.0'
 }

@@ -1,0 +1,52 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="cn.ucai.fulicenter.fragments.CarFragment"
+    android:orientation="vertical">
+<android.support.v7.widget.RecyclerView
+    android:id="@+id/cart_recv"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1">
+
+</android.support.v7.widget.RecyclerView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+        <RadioButton
+            android:id="@+id/car_buy"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:button="@null"
+            android:background="@color/main_orange"
+            android:text="购买"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            />
+        <TextView
+            android:id="@+id/should_pay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/car_buy"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:text="应付"
+            android:gravity="end"
+            android:layout_margin="5dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textColor="@color/orange"
+            android:text="节省"
+            android:gravity="end"
+            android:layout_toLeftOf="@id/car_buy"
+            android:layout_below="@id/should_pay"
+            android:layout_marginRight="5dp"/>
+    </RelativeLayout>
+
+</LinearLayout>
