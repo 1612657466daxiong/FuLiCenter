@@ -1,5 +1,6 @@
 package cn.ucai.fulicenter.activitys;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -131,21 +132,25 @@ public class GoodsDetActivity extends AppCompatActivity {
     }
 
     private void addcargood() {
-        GoodsDao.addcartgood(context,details.getGoodsId(),FuLiCenterApplication.getUser().getMuserName(),1, new OkHttpUtils.OnCompleteListener<MessageBean>() {
-            @Override
-            public void onSuccess(MessageBean result) {
-                if (result.isSuccess()){
-                    CommonUtils.showShortToast(R.string.addcartsuccess);
-                }else {
-                    CommonUtils.showShortToast(R.string.addcartfail);
+        if(FuLiCenterApplication.getUser()!=null) {
+            GoodsDao.addcartgood(context, details.getGoodsId(), FuLiCenterApplication.getUser().getMuserName(), 1, new OkHttpUtils.OnCompleteListener<MessageBean>() {
+                @Override
+                public void onSuccess(MessageBean result) {
+                    if (result.isSuccess()) {
+                        CommonUtils.showShortToast(R.string.addcartsuccess);
+                    } else {
+                        CommonUtils.showShortToast(R.string.addcartfail);
+                    }
                 }
-            }
 
-            @Override
-            public void onError(String error) {
-                CommonUtils.showShortToast(error);
-            }
-        });
+                @Override
+                public void onError(String error) {
+                    CommonUtils.showShortToast(error);
+                }
+            });
+        }else {
+            MFGT.gotoLoginActivityforCart((Activity) context);
+        }
     }
 
     private void showShare() {

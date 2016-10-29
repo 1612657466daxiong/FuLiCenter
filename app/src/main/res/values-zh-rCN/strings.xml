@@ -37,5 +37,6 @@
     <string name="updatecartcountfail">失败</string>
     <string name="deletecartsuccess">已删除该商品</string>
     <string name="deletecartfail">删除失败</string>
+    <string name="nothingcheck">未选择货物结算</string>
 </resources>
 

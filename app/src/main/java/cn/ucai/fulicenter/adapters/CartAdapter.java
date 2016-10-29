@@ -23,6 +23,7 @@ import cn.ucai.fulicenter.net.GoodsDao;
 import cn.ucai.fulicenter.net.OkHttpUtils;
 import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.ImageLoader;
+import cn.ucai.fulicenter.utils.MFGT;
 
 /**
  * Created by Administrator on 2016/10/27.
@@ -85,6 +86,15 @@ public class CartAdapter extends RecyclerView.Adapter {
 
           }
       });
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = (int) v.getTag();
+                CartBean cartBean = mCartlist.get(position);
+                MFGT.gotoGoodsDetailsActivity(context,cartBean.getGoodsId());
+            }
+        });
+
         return viewHolder;
     }
 
@@ -100,6 +110,7 @@ public class CartAdapter extends RecyclerView.Adapter {
         viewHolder.changeCart.setTag(position);
         viewHolder.delCart.setTag(position);
         viewHolder.ischecked.setTag(position);
+        viewHolder.itemView.setTag(position);
 
     }
 

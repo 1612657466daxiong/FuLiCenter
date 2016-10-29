@@ -22,6 +22,7 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.activitys.MainActivity;
@@ -29,8 +30,10 @@ import cn.ucai.fulicenter.adapters.CartAdapter;
 import cn.ucai.fulicenter.bean.CartBean;
 import cn.ucai.fulicenter.net.GoodsDao;
 import cn.ucai.fulicenter.net.OkHttpUtils;
+import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.ConvertUtils;
 import cn.ucai.fulicenter.utils.L;
+import cn.ucai.fulicenter.utils.MFGT;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -63,6 +66,17 @@ public class CarFragment extends Fragment {
 
     public CarFragment() {
         // Required empty public constructor
+    }
+
+    String carids;
+    @OnClick(R.id.car_buy)
+    public void buy(View view){
+        if (carids!=null){
+            MFGT.gotoCharge(context,carids);
+            //TODO 传递勾选商品id
+        }else {
+            CommonUtils.showShortToast(R.string.nothingcheck);
+        }
     }
 
     @Override
@@ -151,11 +165,13 @@ public class CarFragment extends Fragment {
     }
 
     private void sumprice() {
+        carids=null;
         int sumPrice = 0;
         int rankPrice = 0;
-        if (list.size() > 0) {
+        if (list!=null&&list.size() > 0) {
             for (CartBean c : list) {
                 if (c.isChecked()) {
+                    carids+=c.getId()+",";
                     sumPrice += money(c.getGoods().getCurrencyPrice()) * c.getCount();
                     rankPrice += money(c.getGoods().getRankPrice()) * c.getCount();
                 }
@@ -163,6 +179,7 @@ public class CarFragment extends Fragment {
             mshouldPay.setText("合计：￥ " + Double.valueOf(sumPrice));
             mcartSavemoney.setText("节省：￥ " + Double.valueOf(sumPrice - rankPrice));
         } else {
+            carids=null;
           mshouldPay.setText("合计：￥0 ");
             mcartSavemoney.setText("节省：￥0 ");
         }

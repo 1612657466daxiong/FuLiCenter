@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.activitys.BoutiqueDetActivity;
 import cn.ucai.fulicenter.activitys.Category2Activity;
+import cn.ucai.fulicenter.activitys.ChargingActivity;
 import cn.ucai.fulicenter.activitys.CollectActivity;
 import cn.ucai.fulicenter.activitys.GoodsDetActivity;
 import cn.ucai.fulicenter.activitys.LoginActivity;
@@ -86,8 +87,13 @@ public class MFGT {
         startActivity(activity,intent);
     }
 
-    public static void gotoLoginActivityforCart(MainActivity context) {
+    public static void gotoLoginActivityforCart(Activity context) {
         Intent intent = new Intent(context,LoginActivity.class);
         startActivityforresult(context, intent,112);
+    }
+
+    public static void gotoCharge(Activity context,String carids){
+        Intent intent = new Intent(context, ChargingActivity.class).putExtra(I.Cart.ID,carids);
+        startActivity(context,intent);
     }
 }
